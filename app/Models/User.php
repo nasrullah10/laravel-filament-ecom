@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\Order;
 class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -21,6 +21,8 @@ class User extends Authenticatable implements FilamentUser
     protected $fillable = [
         'name',
         'email',
+        'google_id',
+        'avatar',
         'email_verified_at',
         'password',
     ];
@@ -44,14 +46,15 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return strtolower($this->email) === 'superadmin@gmail.com';
+    }
 
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->email === 'admin@gmail.com';
-    }
+    
 }

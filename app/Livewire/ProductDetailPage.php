@@ -12,30 +12,45 @@ class ProductDetailPage extends Component
 {
     public $slug;
     public $quantity = 1;
+    public $relatedProducts = [];
     public function mount($slug)
     {
-        $this->slug = $slug;
+        $this->product = Product::where('slug', $slug)->firstOrFail();
+        
+        // Fetch related products (same category, exclude current)
+        $this->relatedProducts = Product::where('category_id', $this->product->category_id)
+            ->where('id', '!=', $this->product->id)
+            ->where('is_active', 1)
+            ->limit(4)
+            ->get();
     }
+
     public function increaseQuantity()
     {
         $this->quantity++;
+        $this->dispatch('refresh');
     }
+
     public function decreaseQuantity()
     {
         if ($this->quantity > 1) {
             $this->quantity--;
+            $this->dispatch('refresh');
         }
     }
-    // add to cart item method
+
     public function addToCart($product_id)
     {
-        // dd($product_id);
         $total_count = CartManagement::addItemToCartWithQuantity($product_id, $this->quantity);
-        $dispatch = $this->dispatch('update-to-cart', total_count: $total_count)->to(Navbar::class);
-        LivewireAlert::title('Changes saved!')
-        ->success()
-        ->show();
+        
+        // 👇 Sirf dispatch, ->to() nahi chahiye
+        $this->dispatch('update-to-cart', total_count: $total_count);
+        
+        LivewireAlert::title('Added to cart!')
+            ->success()
+            ->show();
     }
+
     public function render()
     {
         $product = Product::where('slug', $this->slug)->firstOrFail();

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->json('images')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
+            $table->decimal('compare_price', 10, 2)->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false); 
             $table->boolean('in_stock')->default(true);

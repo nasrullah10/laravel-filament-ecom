@@ -6,7 +6,7 @@ use App\Models\Category;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 
-#[Title('Categories Page - Laravel Filament Ecommerce')]
+#[Title('Categories - NaasShopping')]
 
 class CategoriesPage extends Component
 {

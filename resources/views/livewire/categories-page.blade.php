@@ -1,4 +1,12 @@
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
+   <!-- Breadcrumb -->
+    <nav class="mb-6">
+        <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">
+            <li><a href="/" class="hover:text-[#1a3c34] transition">Home</a></li>
+            <li>/</li>
+            <li class="text-[#1a3c34]">Categories</li>
+        </ol>
+    </nav>
   <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
 

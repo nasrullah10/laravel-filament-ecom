@@ -17,6 +17,7 @@ class Product extends Model
         'images',
         'description',
         'price',
+        'compare_price',
         'is_active',
         'is_featured',
         'in_stock',

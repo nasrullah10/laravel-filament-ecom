@@ -14,45 +14,69 @@ use App\Livewire\MyOrderDetailPage;
 use App\Livewire\ProductDetailPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
 use App\Livewire\Auth\ResetPasswordPage;
 use App\Livewire\Auth\ForgotPasswordPage;
-
+use App\Livewire\Pages\ShowPage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+Mail::raw('This is a test email from Laravel.', function ($message) {
+$message->to('info@naasshopping.com')
+->subject('Laravel Email Test');
+});
+
+return 'Email sent successfully!';
+});
+
+
+use App\Http\Controllers\Auth\GoogleController;
+// routes/web.php
+Route::get('/html-sitemap', \App\Livewire\HtmlSitemap::class)->name('html-sitemap');
+Route::get('/auth/google', [GoogleController::class, 'redirect'])
+    ->name('google.login');
+
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+
+Route::get('/privacy-policy', ShowPage::class)->name('privacy-policy');
+Route::get('/terms-conditions', ShowPage::class)->name('terms-conditions');
+Route::get('/about-us', ShowPage::class)->name('about-us');
+Route::get('/contact-us', ShowPage::class)->name('contact-us');
+Route::get('/page/{slug}', ShowPage::class)->name('page.show');
+
+// Public Routes (No Auth Required)
 Route::get('/', HomePage::class)->name('home');
 Route::get('/categories', CategoriesPage::class)->name('categories');
 Route::get('/products', ProductsPage::class)->name('products');
 Route::get('/cart', CartPage::class)->name('cart');
 Route::get('/products/{slug}', ProductDetailPage::class)->name('product-detail');
 
-
+// Checkout Routes (Guest + Auth Both)
+// ✅ Checkout routes — Livewire components (Controller Nahi!)
+Route::get('/checkout', CheckoutPage::class)->name('checkout');
+Route::get('/success', SuccessPage::class)->name('checkout.success');   // ✅ Livewire
+Route::get('/cancel', CancelPage::class)->name('checkout.cancel');       // ✅ Livewire
+// Guest Only Routes (Auth nahi honi chahiye)
 Route::middleware('guest')->group(function () {
     Route::get('/login', LoginPage::class)->name('login');
     Route::get('/register', RegisterPage::class)->name('register');
     Route::get('/forgot', ForgotPasswordPage::class)->name('password.request');
     Route::get('/reset-password/{token}', ResetPasswordPage::class)->name('password.reset');
-
 });
 
 
+// Auth Only Routes (Login required)
 Route::middleware('auth')->group(function () {
-    Route::get('/checkout', CheckoutPage::class)->name('checkout');
     Route::get('/my-orders', MyOrdersPage::class)->name('my-orders');
     Route::get('/my-order-detail/{order_id}', MyOrderDetailPage::class)->name('my-order-detail');
-    Route::get('/success', SuccessPage::class)->name('checkout.success');
-    Route::get('/cancel', CancelPage::class)->name('checkout.cancel');
     Route::get('/logout', function () {
         Auth::logout();
         return redirect('/');
     })->name('logout');
 });
-

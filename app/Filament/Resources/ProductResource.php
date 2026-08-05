@@ -75,6 +75,22 @@ class ProductResource extends Resource
                         ->required()
                         ->numeric()
                         ->prefix('PKR'),
+                        TextInput::make('compare_price')
+                        ->numeric()
+                        ->prefix('PKR')
+                        ->placeholder('Original price before discount')
+                        ->helperText('Must be greater than sale price')
+                        ->rules([
+                            'nullable',
+                            function () {
+                                return function (string $attribute, $value, \Closure $fail) {
+                                    $price = request()->input('data.price'); // Filament form data
+                                    if ($value && $value <= $price) {
+                                        $fail('Compare price must be greater than sale price.');
+                                    }
+                                };
+                            },
+                        ]),
                     ]),
 
                     Section::make('Associations')->schema([
