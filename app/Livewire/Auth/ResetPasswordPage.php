@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 
-#[Title('Reset Password')]
+#[Title('Reset Password - NAAS Shopping')]
 class ResetPasswordPage extends Component
 {
     public $token;

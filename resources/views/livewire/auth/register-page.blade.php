@@ -9,7 +9,7 @@
                         Create Account
                     </h1>
                     <p class="mt-1 text-gray-500 text-sm">
-                        Join NAASSHOPPING Premium Fashion
+                        Join NAAS Shopping Premium Fashion
                     </p>
                     <p class="mt-1 text-xs text-gray-600">
                         Already have an account?

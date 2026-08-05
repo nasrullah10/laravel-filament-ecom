@@ -9,7 +9,7 @@ use App\Models\OrderItem;
 use App\Models\Address;
 
 
-#[Title('My Order Detail')]
+#[Title('Order Details - NAAS Shopping')]
 class MyOrderDetailPage extends Component
 {
     public function mount($order_id)

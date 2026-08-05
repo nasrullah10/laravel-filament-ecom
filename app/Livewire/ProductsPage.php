@@ -13,7 +13,7 @@ use App\Helpers\CartManagement;
 use App\Livewire\Partials\Navbar;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
-#[Title('Products Details - NaasShopping')]
+#[Title('Products - NAAS Shopping')]
 class ProductsPage extends Component
 {
     use WithPagination;
@@ -30,6 +30,9 @@ class ProductsPage extends Component
     public $price_range = 50000;
     #[Url]
     public $sort = 'latest';
+
+    #[Url(as: 'q')]
+    public string $search = '';
 
     // Add this for URL category parameter
     #[Url]
@@ -72,9 +75,24 @@ class ProductsPage extends Component
         LivewireAlert::title('Added to cart!')->success()->show();
     }
 
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $products = Product::query()->where('is_active', 1);
+
+        if (trim($this->search) !== '') {
+            $term = trim($this->search);
+            $products->where(function ($query) use ($term) {
+                $query->where('name', 'like', '%'.$term.'%')
+                    ->orWhere('description', 'like', '%'.$term.'%')
+                    ->orWhereHas('category', fn ($category) => $category->where('name', 'like', '%'.$term.'%'))
+                    ->orWhereHas('brand', fn ($brand) => $brand->where('name', 'like', '%'.$term.'%'));
+            });
+        }
         
         // if(!empty($this->selected_categories)){
         //     $products->whereIn('category_id', $this->selected_categories);

@@ -8,4 +8,4 @@ Disallow: /checkout
 Disallow: /user/
 Disallow: /livewire/
 
-Sitemap: https://naasshoping.com/sitemap.xml
+Sitemap: https://naasshopping.com/sitemap.xml

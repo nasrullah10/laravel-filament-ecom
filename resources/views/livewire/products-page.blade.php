@@ -1,4 +1,13 @@
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
+    @if(trim($search) !== '')
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-naas-cream-dark pb-5">
+            <div>
+                <p class="text-xs tracking-[0.2em] text-naas-terracotta uppercase mb-1">Search Results</p>
+                <h1 class="font-serif text-2xl md:text-3xl">Results for “{{ $search }}”</h1>
+            </div>
+            <button type="button" wire:click="$set('search', '')" class="text-xs tracking-wider hover:text-naas-terracotta">CLEAR SEARCH</button>
+        </div>
+    @endif
     <!-- Breadcrumb -->
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">

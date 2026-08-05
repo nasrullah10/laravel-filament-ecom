@@ -9,7 +9,7 @@
                         Sign In
                     </h1>
                     <p class="mt-1 text-gray-500 text-sm">
-                        Welcome back to NAASSHOPPING Premium Fashion
+                        Welcome back to NAAS Shopping Premium Fashion
                     </p>
                     <p class="mt-1 text-xs text-gray-600">
                         Don't have an account?

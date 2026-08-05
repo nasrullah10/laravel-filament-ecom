@@ -8,7 +8,7 @@ use App\Helpers\CartManagement;
 use App\Livewire\Partials\Navbar;
 use App\Models\Product;
 
-#[Title('Cart NaasShopping')]
+#[Title('Cart - NAAS Shopping')]
 
 class CartPage extends Component
 {

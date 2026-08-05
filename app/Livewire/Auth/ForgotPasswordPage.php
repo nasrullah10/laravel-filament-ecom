@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Password;
 
-#[Title('Forgot Password')]
+#[Title('Forgot Password - NAAS Shopping')]
 class ForgotPasswordPage extends Component
 {
     public $email;

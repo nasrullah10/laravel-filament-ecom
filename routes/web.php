@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Livewire\Auth\ResetPasswordPage;
 use App\Livewire\Auth\ForgotPasswordPage;
+use App\Livewire\BlogPage;
+use App\Livewire\BlogDetailPage;
 use App\Livewire\Pages\ShowPage;
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +29,9 @@ use App\Livewire\Pages\ShowPage;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/test-email', function () {
-Mail::raw('This is a test email from Laravel.', function ($message) {
+Mail::raw('This is a test email from NAAS Shopping.', function ($message) {
 $message->to('info@naasshopping.com')
-->subject('Laravel Email Test');
+->subject('NAAS Shopping Email Test');
 });
 
 return 'Email sent successfully!';
@@ -56,6 +58,8 @@ Route::get('/categories', CategoriesPage::class)->name('categories');
 Route::get('/products', ProductsPage::class)->name('products');
 Route::get('/cart', CartPage::class)->name('cart');
 Route::get('/products/{slug}', ProductDetailPage::class)->name('product-detail');
+Route::get('/blog', BlogPage::class)->name('blog.index');
+Route::get('/blog/{slug}', BlogDetailPage::class)->name('blog.show');
 
 // Checkout Routes (Guest + Auth Both)
 // ✅ Checkout routes — Livewire components (Controller Nahi!)

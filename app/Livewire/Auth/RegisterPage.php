@@ -8,7 +8,7 @@ use Livewire\Component;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
-#[Title('Register')]
+#[Title('Register - NAAS Shopping')]
 class RegisterPage extends Component
 {
     public $name;

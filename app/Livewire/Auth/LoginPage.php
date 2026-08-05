@@ -5,7 +5,7 @@ namespace App\Livewire\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 
-#[Title('Login')]
+#[Title('Login - NAAS Shopping')]
 class LoginPage extends Component
 {
     public $email;

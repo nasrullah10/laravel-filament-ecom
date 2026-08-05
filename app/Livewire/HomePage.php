@@ -9,7 +9,7 @@ use Livewire\Component;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 
-#[Title('Home - NaasShopping')]
+#[Title('Home - NAAS Shopping')]
 #[Layout('components.layouts.app')]
 class HomePage extends Component
 {
@@ -43,11 +43,10 @@ class HomePage extends Component
                 ->get();
         }
 
-        // ===== Featured Products =====
+        // ===== New Arrivals (Latest 8 Active Products) =====
         $featuredProducts = Product::where('is_active', 1)
-            ->where('is_featured', 1)
             ->latest()
-            ->take(4)
+            ->take(8)
             ->get();
 
         return view('livewire.home-page', compact(

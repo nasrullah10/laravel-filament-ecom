@@ -13,7 +13,7 @@ use App\Mail\AdminNewOrder;
 use Illuminate\Support\Facades\Mail;
 
 use Livewire\Component;
-#[Title('Checkout')]
+#[Title('Checkout - NAAS Shopping')]
 class CheckoutPage extends Component
 {
     public $first_name;
