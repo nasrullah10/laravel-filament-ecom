@@ -1,3 +1,41 @@
+@push('meta')
+    @php
+        $schemaImages = collect($product->images ?? [])
+            ->filter()
+            ->map(fn ($image) => asset('storage/'.$image))
+            ->values()
+            ->all();
+
+        $productSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            'name' => $product->name,
+            'image' => $schemaImages,
+            'description' => trim(preg_replace('/\s+/', ' ', strip_tags(\Illuminate\Support\Str::markdown($product->description ?? '')))),
+            'sku' => 'NAAS-'.$product->id,
+            'brand' => [
+                '@type' => 'Brand',
+                'name' => $product->brand?->name ?? 'NAAS Shopping',
+            ],
+            'offers' => [
+                '@type' => 'Offer',
+                'price' => number_format((float) $product->price, 2, '.', ''),
+                'priceCurrency' => 'PKR',
+                'availability' => $product->in_stock
+                    ? 'https://schema.org/InStock'
+                    : 'https://schema.org/OutOfStock',
+                'itemCondition' => 'https://schema.org/NewCondition',
+                'url' => route('product-detail', $product->slug),
+                'seller' => [
+                    '@type' => 'Organization',
+                    'name' => 'NAAS Shopping',
+                ],
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
+
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
        @php
             $allImages = $product->images ?? [];
@@ -106,15 +144,29 @@
                             </div>
                         </div>
 
-                        <!-- Add to Cart -->
-                        <div class="flex flex-wrap items-center gap-4">
-                            <button wire:click="addToCart({{ $product->id }})" 
-                                    class="w-full py-4 bg-[#1a3c34] text-white text-sm tracking-widest uppercase hover:bg-opacity-90 transition duration-300 lg:w-2/5">
+                        <!-- Purchase Actions -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button type="button" wire:click="addToCart({{ $product->id }})"
+                                    wire:loading.attr="disabled"
+                                    wire:target="addToCart({{ $product->id }}),buyNow({{ $product->id }})"
+                                    @disabled(! $product->in_stock)
+                                    class="w-full py-4 bg-[#1a3c34] text-white text-sm tracking-widest uppercase hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300">
                                 <span wire:loading.remove wire:target="addToCart({{ $product->id }})">Add to Bag</span>
                                 <span wire:loading wire:target="addToCart({{ $product->id }})">Adding...</span>
                             </button>
 
-                            <a href="/products" 
+                            <button type="button" wire:click="buyNow({{ $product->id }})"
+                                    wire:loading.attr="disabled"
+                                    wire:target="addToCart({{ $product->id }}),buyNow({{ $product->id }})"
+                                    @disabled(! $product->in_stock)
+                                    class="w-full py-4 bg-[#C65D3B] text-white text-sm tracking-widest uppercase hover:bg-[#a94d30] disabled:opacity-50 disabled:cursor-not-allowed transition duration-300">
+                                <span wire:loading.remove wire:target="buyNow({{ $product->id }})">Buy Now</span>
+                                <span wire:loading wire:target="buyNow({{ $product->id }})">Redirecting...</span>
+                            </button>
+                        </div>
+
+                        <div class="mt-4">
+                            <a href="{{ route('products') }}"
                                class="text-xs tracking-widest uppercase text-gray-500 hover:text-[#1a3c34] transition border-b border-transparent hover:border-[#1a3c34] pb-1">
                                 Continue Shopping
                             </a>
