@@ -77,6 +77,8 @@ class CartManagement
                 unset($cart_items[$key]);
             }
         }
+
+        $cart_items = array_values($cart_items);
         
         self::addCartItemsToCookie($cart_items);
         return $cart_items;
