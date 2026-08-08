@@ -1,3 +1,36 @@
+@push('meta')
+    @php
+        $organizationSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => 'NAAS Shopping',
+            'url' => 'https://naasshopping.com/',
+            'logo' => 'https://naasshopping.com/images/naas-logo.jpeg',
+            'sameAs' => [
+                'https://www.facebook.com/NaasShopping',
+                'https://www.instagram.com/naasshopping.pk/',
+            ],
+        ];
+
+        $websiteSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            'name' => 'NAAS Shopping',
+            'url' => 'https://naasshopping.com/',
+            'potentialAction' => [
+                '@type' => 'SearchAction',
+                'target' => [
+                    '@type' => 'EntryPoint',
+                    'urlTemplate' => 'https://naasshopping.com/products?q={search_term_string}',
+                ],
+                'query-input' => 'required name=search_term_string',
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    <script type="application/ld+json">{!! json_encode($websiteSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
+
 <div>
     {{-- ==========================================
          HERO SLIDER - Dynamic from DB + Product Fallback

@@ -1,3 +1,41 @@
+@push('meta')
+    @php
+        $schemaImages = collect($product->images ?? [])
+            ->filter()
+            ->map(fn ($image) => asset('storage/'.$image))
+            ->values()
+            ->all();
+
+        $productSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            'name' => $product->name,
+            'image' => $schemaImages,
+            'description' => trim(preg_replace('/\s+/', ' ', strip_tags(\Illuminate\Support\Str::markdown($product->description ?? '')))),
+            'sku' => 'NAAS-'.$product->id,
+            'brand' => [
+                '@type' => 'Brand',
+                'name' => $product->brand?->name ?? 'NAAS Shopping',
+            ],
+            'offers' => [
+                '@type' => 'Offer',
+                'price' => number_format((float) $product->price, 2, '.', ''),
+                'priceCurrency' => 'PKR',
+                'availability' => $product->in_stock
+                    ? 'https://schema.org/InStock'
+                    : 'https://schema.org/OutOfStock',
+                'itemCondition' => 'https://schema.org/NewCondition',
+                'url' => route('product-detail', $product->slug),
+                'seller' => [
+                    '@type' => 'Organization',
+                    'name' => 'NAAS Shopping',
+                ],
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
+
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
        @php
             $allImages = $product->images ?? [];

@@ -15,7 +15,7 @@ class ProductDetailPage extends Component
     public $relatedProducts = [];
     public function mount($slug)
     {
-        $this->product = Product::where('slug', $slug)->firstOrFail();
+        $this->product = Product::with('brand')->where('slug', $slug)->firstOrFail();
         
         // Fetch related products (same category, exclude current)
         $this->relatedProducts = Product::where('category_id', $this->product->category_id)
@@ -53,7 +53,7 @@ class ProductDetailPage extends Component
 
     public function render()
     {
-        $product = Product::where('slug', $this->slug)->firstOrFail();
+        $product = Product::with('brand')->where('slug', $this->slug)->firstOrFail();
         return view('livewire.product-detail-page', [
             'product' => $product,
         ]);
