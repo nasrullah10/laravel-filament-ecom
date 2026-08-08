@@ -131,7 +131,7 @@
             
             <!-- Right Column - Order Summary -->
             <div class="lg:col-span-5 col-span-12">
-                <div class="bg-[#f5f0e8] p-6 sm:p-8 sticky top-6">
+                <div class="bg-[#f5f0e8] p-6 sm:p-8 relative">
                     <div class="font-serif text-2xl text-[#1a3c34] mb-6">
                         ORDER SUMMARY
                     </div>
@@ -172,29 +172,19 @@
                     </div>
                     <ul class="divide-y divide-gray-300" role="list">
                         @foreach($cart_items as $item)
-                        <li class="py-4" wire:key="{{ $item['product_id'] ?? $item['id'] ?? $loop->index }}">
-                            <div class="flex items-center">
+                        <li class="py-5" wire:key="basket-{{ $item['product_id'] ?? $item['id'] ?? $loop->index }}">
+                            <div class="flex items-start gap-4">
                                 <!-- Dynamic Product Image -->
                                 <div class="flex-shrink-0">
-                                    @php
-                                        $product = \App\Models\Product::find($item['product_id'] ?? $item['id'] ?? null);
-                                        $images = [];
-                                        if ($product) {
-                                            $images = is_array($product->images) ? $product->images : json_decode($product->images, true);
-                                            if (!is_array($images)) {
-                                                $images = [$product->images ?? $product->image ?? null];
-                                            }
-                                        }
-                                        $firstImage = $images[0] ?? $product->image ?? null;
-                                    @endphp
+                                    @php($firstImage = $item['image'] ?? null)
                                     
                                     @if($firstImage)
                                         <img src="{{ asset('storage/' . $firstImage)  }}" 
                                              alt="{{ $item['name'] }}" 
-                                             class="w-14 h-16 object-cover"
+                                             class="w-16 h-20 object-cover"
                                              >
                                     @else
-                                        <div class="w-14 h-16 bg-gray-200 flex items-center justify-center">
+                                        <div class="w-16 h-20 bg-gray-200 flex items-center justify-center">
                                             <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                             </svg>
@@ -202,16 +192,48 @@
                                     @endif
                                 </div>
                                 
-                                <div class="flex-1 min-w-0 ms-4">
+                                <div class="flex-1 min-w-0">
                                     <p class="text-sm font-medium text-gray-900 truncate">
                                         {{ $item['name'] }}
                                     </p>
                                     <p class="text-xs text-gray-500 mt-1">
-                                        Qty: {{ $item['quantity'] ?? $item['qty'] ?? 1 }}
+                                        {{ Number::currency($item['unit_amount'] ?? $item['price'] ?? 0, 'PKR') }} each
                                     </p>
+
+                                    <div class="flex items-center mt-3">
+                                        <button type="button"
+                                                wire:click="decreaseCartQuantity({{ $item['product_id'] }})"
+                                                wire:loading.attr="disabled"
+                                                class="w-8 h-8 border border-gray-300 flex items-center justify-center text-[#1a3c34] hover:bg-[#1a3c34] hover:text-white disabled:opacity-50 transition"
+                                                aria-label="Decrease quantity">
+                                            <span aria-hidden="true">−</span>
+                                        </button>
+                                        <span class="w-10 h-8 border-y border-gray-300 flex items-center justify-center text-sm font-medium">
+                                            {{ $item['quantity'] ?? 1 }}
+                                        </span>
+                                        <button type="button"
+                                                wire:click="increaseCartQuantity({{ $item['product_id'] }})"
+                                                wire:loading.attr="disabled"
+                                                class="w-8 h-8 border border-gray-300 flex items-center justify-center text-[#1a3c34] hover:bg-[#1a3c34] hover:text-white disabled:opacity-50 transition"
+                                                aria-label="Increase quantity">
+                                            <span aria-hidden="true">+</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="inline-flex items-center text-sm font-medium text-gray-900">
-                                    {{ Number::currency($item['total_amount'] ?? ($item['price'] * ($item['quantity'] ?? $item['qty'] ?? 1)), 'PKR') }}
+                                <div class="flex flex-col items-end gap-3">
+                                    <span class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                        {{ Number::currency($item['total_amount'] ?? (($item['unit_amount'] ?? $item['price'] ?? 0) * ($item['quantity'] ?? 1)), 'PKR') }}
+                                    </span>
+                                    <button type="button"
+                                            wire:click="removeCartItem({{ $item['product_id'] }})"
+                                            wire:confirm="Remove this item from your basket?"
+                                            wire:loading.attr="disabled"
+                                            class="text-gray-400 hover:text-red-600 disabled:opacity-50 transition"
+                                            aria-label="Remove {{ $item['name'] }}">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 7h12m-10 0V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m-9 0 1 13h8l1-13M10 11v5m4-5v5"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
                         </li>

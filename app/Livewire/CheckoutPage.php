@@ -10,6 +10,7 @@ use Stripe\Stripe;
 use App\Mail\OrderPlaced;
 use App\Mail\CustomerOrderPlaced;
 use App\Mail\AdminNewOrder;
+use App\Livewire\Partials\Navbar;
 use Illuminate\Support\Facades\Mail;
 
 use Livewire\Component;
@@ -25,11 +26,13 @@ class CheckoutPage extends Component
     public $state;
     public $zip_code;
     public $payment_method = 'cod';
+    public array $checkoutCartItems = [];
 
     public function mount()
     {
         $this->payment_method = 'cod';
         $cart_items = CartManagement::getCartItemsFromCookie();
+        $this->checkoutCartItems = $cart_items;
         if (count($cart_items) === 0) {
             return redirect()->route('products');
         }
@@ -56,6 +59,37 @@ class CheckoutPage extends Component
         }
     }
 
+    public function increaseCartQuantity($productId): void
+    {
+        $this->checkoutCartItems = CartManagement::incrementItemQuantity($productId);
+        $this->dispatchCartCount();
+    }
+
+    public function decreaseCartQuantity($productId): void
+    {
+        $this->checkoutCartItems = CartManagement::decrementQuantityToCartItem($productId);
+        $this->dispatchCartCount();
+    }
+
+    public function removeCartItem($productId)
+    {
+        $items = CartManagement::removeItemFromCart($productId);
+        $this->checkoutCartItems = $items;
+        $this->dispatch('update-to-cart', total_count: count($items))->to(Navbar::class);
+
+        if (count($items) === 0) {
+            return redirect()->route('products');
+        }
+    }
+
+    private function dispatchCartCount(): void
+    {
+        $this->dispatch(
+            'update-to-cart',
+            total_count: count($this->checkoutCartItems)
+        )->to(Navbar::class);
+    }
+
     public function placeOrder()
     {
         $rules = [
@@ -73,11 +107,13 @@ class CheckoutPage extends Component
         }
 
         $this->validate($rules);
-        $cart_items = CartManagement::getCartItemsFromCookie();
+        $cart_items = $this->checkoutCartItems;
          $subTotal = CartManagement::calculateGrandTotal($cart_items);
 
         // Shipping Rule
-        $shippingAmount = $subTotal >= 10000 ? 0 : 180;
+        $shippingAmount = empty($cart_items)
+            ? 0
+            : ($subTotal >= 10000 ? 0 : 180);
 
         // Final Total
         $grandTotal = $subTotal + $shippingAmount;
@@ -197,10 +233,12 @@ class CheckoutPage extends Component
 
     public function render()
     {
-        $cart_items = CartManagement::getCartItemsFromCookie();
+        $cart_items = $this->checkoutCartItems;
         $sub_total = CartManagement::calculateGrandTotal($cart_items);
 
-        $shipping_amount = $sub_total >= 10000 ? 0 : 180;
+        $shipping_amount = empty($cart_items)
+            ? 0
+            : ($sub_total >= 10000 ? 0 : 180);
 
         $grand_total = $sub_total + $shipping_amount;
         // Dynamic images ke saath
@@ -213,7 +251,7 @@ class CheckoutPage extends Component
                     $images = [$product->images ?? $product->image ?? null];
                 }
             }
-            $item['image'] = $images[0] ?? $product->image ?? null;
+            $item['image'] = $images[0] ?? $product?->image ?? null;
             return $item;
         })->toArray();
         

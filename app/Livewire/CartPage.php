@@ -24,7 +24,9 @@ class CartPage extends Component
 
         $this->sub_total = CartManagement::calculateGrandTotal($this->cart_items);
     
-        $this->shipping_amount = $this->sub_total >= 10000 ? 0 : 180;
+        $this->shipping_amount = empty($this->cart_items)
+            ? 0
+            : ($this->sub_total >= 10000 ? 0 : 180);
     
         $this->grand_total = $this->sub_total + $this->shipping_amount;
         $this->loadRelatedProducts(); // Add this
@@ -48,7 +50,9 @@ class CartPage extends Component
     {
         $this->cart_items = CartManagement::removeItemFromCart($product_id);
         $this->sub_total = CartManagement::calculateGrandTotal($this->cart_items);
-        $this->shipping_amount = $this->sub_total >= 10000 ? 0 : 180;
+        $this->shipping_amount = empty($this->cart_items)
+            ? 0
+            : ($this->sub_total >= 10000 ? 0 : 180);
         $this->grand_total = $this->sub_total + $this->shipping_amount;
         $this->loadRelatedProducts(); // Reload related products
         $this->dispatch('update-to-cart',total_count: count($this->cart_items))->to(Navbar::class);
@@ -58,7 +62,9 @@ class CartPage extends Component
     {
         $this->cart_items = CartManagement::incrementItemQuantity($product_id);
         $this->sub_total = CartManagement::calculateGrandTotal($this->cart_items);
-        $this->shipping_amount = $this->sub_total >= 10000 ? 0 : 180;
+        $this->shipping_amount = empty($this->cart_items)
+            ? 0
+            : ($this->sub_total >= 10000 ? 0 : 180);
         $this->grand_total = $this->sub_total + $this->shipping_amount;
         $this->dispatch('update-to-cart',total_count: count($this->cart_items))->to(Navbar::class);
     }
@@ -67,7 +73,9 @@ class CartPage extends Component
     {
         $this->cart_items = CartManagement::decrementQuantityToCartItem($product_id);
         $this->sub_total = CartManagement::calculateGrandTotal($this->cart_items);
-        $this->shipping_amount = $this->sub_total >= 10000 ? 0 : 180;
+        $this->shipping_amount = empty($this->cart_items)
+            ? 0
+            : ($this->sub_total >= 10000 ? 0 : 180);
         $this->grand_total = $this->sub_total + $this->shipping_amount;
         $this->dispatch('update-to-cart',total_count: count($this->cart_items))->to(Navbar::class);
     }

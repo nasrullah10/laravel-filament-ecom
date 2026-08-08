@@ -58,11 +58,11 @@
             <div class="flex flex-wrap -mx-4">
                 <!-- Product Images -->
                 <div class="w-full mb-8 md:w-1/2 md:mb-0" x-data="{ mainImage: '{{ $mainImage ? asset('storage/' . $mainImage) : '' }}' }">
-                    <div class="sticky top-0 z-50 overflow-hidden">
-                        <div class="relative mb-6 lg:mb-10 lg:h-2/4">
+                    <div class="md:sticky md:top-32 z-0 overflow-hidden">
+                        <div class="relative mb-6 lg:mb-10 bg-[#FAF9F6] aspect-[4/5] max-h-[75vh]">
                             <img x-bind:src="mainImage" 
                                  alt="{{ $product->name }}" 
-                                 class="object-cover w-full lg:h-full"
+                                 class="object-contain w-full h-full"
                                  onerror="this.style.display='none'">
                         </div>
                         <div class="flex-wrap hidden md:flex">
