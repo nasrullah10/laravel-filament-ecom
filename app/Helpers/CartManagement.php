@@ -60,7 +60,7 @@ class CartManagement
                 'name' => $product->name,
                 'quantity' => $quantity,
                 'unit_amount' => $product->price,
-                'total_amount' => $product->price,
+                'total_amount' => $product->price * $quantity,
             ];
             }
         }
@@ -97,7 +97,7 @@ class CartManagement
     // get cart items from cookie
     static public function getCartItemsFromCookie()
     {
-        $cart_items = json_decode(Cookie::get('cart_items'),true);
+        $cart_items = json_decode(Cookie::get('cart_items') ?? '[]', true);
         if(!$cart_items){
             $cart_items = [];
         }
@@ -141,4 +141,3 @@ class CartManagement
         return array_sum(array_column($items, 'total_amount'));
     }
 }
-

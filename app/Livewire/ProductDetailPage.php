@@ -10,11 +10,13 @@ use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
 class ProductDetailPage extends Component
 {
+    public Product $product;
     public $slug;
     public $quantity = 1;
     public $relatedProducts = [];
     public function mount($slug)
     {
+        $this->slug = $slug;
         $this->product = Product::with('brand')->where('slug', $slug)->firstOrFail();
         
         // Fetch related products (same category, exclude current)
@@ -41,6 +43,10 @@ class ProductDetailPage extends Component
 
     public function addToCart($product_id)
     {
+        $this->validate([
+            'quantity' => ['required', 'integer', 'min:1', 'max:20'],
+        ]);
+
         $total_count = CartManagement::addItemToCartWithQuantity($product_id, $this->quantity);
         
         // 👇 Sirf dispatch, ->to() nahi chahiye
@@ -49,6 +55,30 @@ class ProductDetailPage extends Component
         LivewireAlert::title('Added to cart!')
             ->success()
             ->show();
+    }
+
+    public function buyNow($product_id)
+    {
+        $this->validate([
+            'quantity' => ['required', 'integer', 'min:1', 'max:20'],
+        ]);
+
+        $product = Product::query()
+            ->whereKey($product_id)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        if (! $product->in_stock) {
+            LivewireAlert::title('This product is currently out of stock.')
+                ->warning()
+                ->show();
+
+            return;
+        }
+
+        CartManagement::addItemToCartWithQuantity($product->id, $this->quantity);
+
+        return redirect()->route('checkout');
     }
 
     public function render()
