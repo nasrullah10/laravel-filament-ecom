@@ -40,7 +40,7 @@ return 'Email sent successfully!';
 
 use App\Http\Controllers\Auth\GoogleController;
 // routes/web.php
-Route::get('/html-sitemap', \App\Livewire\HtmlSitemap::class)->name('html-sitemap');
+Route::get('/sitemap.xml', \App\Livewire\HtmlSitemap::class)->name('html-sitemap');
 Route::get('/auth/google', [GoogleController::class, 'redirect'])
     ->name('google.login');
 
