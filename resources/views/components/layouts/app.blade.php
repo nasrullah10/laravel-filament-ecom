@@ -3,6 +3,17 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-88BS9Z6DB1"></script>
+  
+   <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Naasshopping",
+  "url": "https://naasshopping.com/",
+  "logo": "https://naasshopping.com/images/naas-logo.jpeg"
+}
+</script>
+
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
