@@ -86,6 +86,6 @@ class ProductDetailPage extends Component
         $product = Product::with('brand')->where('slug', $this->slug)->firstOrFail();
         return view('livewire.product-detail-page', [
             'product' => $product,
-        ]);
+        ])->title($product->name.' - NAAS Shopping');
     }
 }

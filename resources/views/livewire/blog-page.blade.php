@@ -1,3 +1,32 @@
+@push('meta')
+    @php
+        $blogTitle = $category
+            ? ucwords(str_replace('-', ' ', $category)).' Articles - NAAS Shopping Blog'
+            : 'NAAS Shopping Blog - Style Guides & Inspiration';
+        $blogDescription = $category
+            ? 'Read the latest '.str_replace('-', ' ', $category).' articles, style guides and inspiration from NAAS Shopping.'
+            : 'Explore modest fashion style guides, shopping advice, product stories and inspiration from the NAAS Shopping Journal.';
+        $blogCanonical = $category
+            ? route('blog.index', ['category' => $category])
+            : route('blog.index');
+        $collectionSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            'name' => $blogTitle,
+            'description' => $blogDescription,
+            'url' => $blogCanonical,
+            'isPartOf' => ['@type' => 'WebSite', 'name' => 'NAAS Shopping', 'url' => route('home')],
+        ];
+    @endphp
+    <x-seo-meta
+        :title="$blogTitle"
+        :description="$blogDescription"
+        :canonical="$blogCanonical"
+        :robots="trim($search) !== '' ? 'noindex,follow' : 'index,follow,max-image-preview:large'"
+    />
+    <script type="application/ld+json">{!! json_encode($collectionSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
+
 <div class="min-h-screen">
     <section class="bg-naas-green text-white py-20">
         <div class="max-w-4xl mx-auto px-4 text-center">

@@ -5,13 +5,21 @@
             ->map(fn ($image) => asset('storage/'.$image))
             ->values()
             ->all();
+        $productUrl = route('product-detail', $product->slug);
+        $productTitle = $product->name.' - NAAS Shopping';
+        $productDescription = \Illuminate\Support\Str::limit(
+            trim(preg_replace('/\s+/', ' ', strip_tags(\Illuminate\Support\Str::markdown($product->description ?? '')))),
+            160,
+            ''
+        );
+        $productImage = $schemaImages[0] ?? asset('images/naas-logo.jpeg');
 
         $productSchema = [
             '@context' => 'https://schema.org',
             '@type' => 'Product',
             'name' => $product->name,
-            'image' => $schemaImages,
-            'description' => trim(preg_replace('/\s+/', ' ', strip_tags(\Illuminate\Support\Str::markdown($product->description ?? '')))),
+            'image' => $schemaImages ?: [$productImage],
+            'description' => $productDescription,
             'sku' => 'NAAS-'.$product->id,
             'brand' => [
                 '@type' => 'Brand',
@@ -25,15 +33,32 @@
                     ? 'https://schema.org/InStock'
                     : 'https://schema.org/OutOfStock',
                 'itemCondition' => 'https://schema.org/NewCondition',
-                'url' => route('product-detail', $product->slug),
+                'url' => $productUrl,
                 'seller' => [
                     '@type' => 'Organization',
                     'name' => 'NAAS Shopping',
                 ],
             ],
         ];
+        $productBreadcrumbs = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Products', 'item' => route('products')],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => $product->name, 'item' => $productUrl],
+            ],
+        ];
     @endphp
+    <x-seo-meta
+        :title="$productTitle"
+        :description="$productDescription"
+        :canonical="$productUrl"
+        :image="$productImage"
+        type="product"
+    />
     <script type="application/ld+json">{!! json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    <script type="application/ld+json">{!! json_encode($productBreadcrumbs, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 @endpush
 
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">

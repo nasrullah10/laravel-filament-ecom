@@ -8,6 +8,7 @@ use Spatie\Sitemap\Tags\Url;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\BlogPost;
+use App\Models\BlogCategory;
 use App\Models\Page;
 
 class GenerateSitemap extends Command
@@ -41,6 +42,17 @@ class GenerateSitemap extends Command
             );
         });
 
+        BlogCategory::where('is_active', true)
+            ->whereHas('posts', fn ($query) => $query->published())
+            ->each(function ($category) use ($sitemap) {
+                $sitemap->add(
+                    Url::create(route('blog.index', ['category' => $category->slug]))
+                        ->setLastModificationDate($category->updated_at)
+                        ->setPriority(0.6)
+                        ->setChangeFrequency('weekly')
+                );
+            });
+
         BlogPost::published()->each(function ($post) use ($sitemap) {
             $sitemap->add(
                 Url::create(route('blog.show', $post->slug))
@@ -51,8 +63,15 @@ class GenerateSitemap extends Command
         });
 
         Page::active()->each(function ($page) use ($sitemap) {
+            $pageUrl = match ($page->type) {
+                'privacy_policy' => route('privacy-policy'),
+                'terms_conditions' => route('terms-conditions'),
+                'about_us' => route('about-us'),
+                'contact' => route('contact-us'),
+                default => route('page.show', $page->slug),
+            };
             $sitemap->add(
-                Url::create(route('page.show', $page->slug))
+                Url::create($pageUrl)
                     ->setLastModificationDate($page->updated_at)
                     ->setPriority(0.6)
                     ->setChangeFrequency('monthly')

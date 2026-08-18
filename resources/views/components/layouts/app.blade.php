@@ -66,7 +66,24 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
     
-    @stack('meta')
+    @php
+        $pageMeta = trim($__env->yieldPushContent('meta'));
+        $privateRouteNames = [
+            'cart', 'checkout', 'checkout.success', 'checkout.cancel',
+            'login', 'register', 'password.request', 'password.reset',
+            'my-orders', 'my-order-detail', 'logout',
+        ];
+    @endphp
+    @if($pageMeta !== '')
+        {!! $pageMeta !!}
+    @else
+        <x-seo-meta
+            :title="$title ?? 'NAAS Shopping - Premium Fashion'"
+            description="Shop premium modest fashion, abayas, hijabs, bedsheets and accessories at NAAS Shopping with delivery across Pakistan."
+            :canonical="url()->current()"
+            :robots="request()->routeIs(...$privateRouteNames) ? 'noindex,nofollow' : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'"
+        />
+    @endif
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

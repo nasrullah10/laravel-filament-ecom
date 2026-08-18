@@ -1,5 +1,7 @@
 @push('meta')
     @php
+        $homeTitle = 'NAAS Shopping - Premium Modest Fashion in Pakistan';
+        $homeDescription = 'Shop premium abayas, hijabs, bedsheets, niqabs and modest fashion accessories online at NAAS Shopping with delivery across Pakistan.';
         $organizationSchema = [
             '@context' => 'https://schema.org',
             '@type' => 'Organization',
@@ -27,6 +29,12 @@
             ],
         ];
     @endphp
+    <x-seo-meta
+        :title="$homeTitle"
+        :description="$homeDescription"
+        canonical="https://naasshopping.com/"
+        image="https://naasshopping.com/images/naas-logo.jpeg"
+    />
     <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
     <script type="application/ld+json">{!! json_encode($websiteSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 @endpush

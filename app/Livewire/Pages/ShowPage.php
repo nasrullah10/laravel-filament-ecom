@@ -35,6 +35,6 @@ class ShowPage extends Component
         return view('livewire.pages.show-page', [
             'page' => $this->page,
             'menuCategories' => $menuCategories,
-        ]);
+        ])->title(($this->page->meta_title ?: $this->page->title).' - NAAS Shopping');
     }
 }

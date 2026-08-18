@@ -1,3 +1,11 @@
+@push('meta')
+    <x-seo-meta
+        title="Shop by Category - NAAS Shopping"
+        description="Explore NAAS Shopping categories including abayas, hijabs, bedsheets, niqabs and modest fashion accessories."
+        :canonical="route('categories')"
+    />
+@endpush
+
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
    <!-- Breadcrumb -->
     <nav class="mb-6">

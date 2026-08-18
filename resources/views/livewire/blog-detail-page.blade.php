@@ -1,10 +1,55 @@
+@push('meta')
+    @php
+        $articleTitle = $post->meta_title ?: $post->title.' - NAAS Shopping';
+        $articleDescription = $post->meta_description
+            ?: ($post->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($post->content), 160, ''));
+        $articleUrl = route('blog.show', $post->slug);
+        $articleImage = $post->featured_image
+            ? asset('storage/'.$post->featured_image)
+            : asset('images/naas-logo.jpeg');
+        $articleAuthor = $post->author?->name ?? 'NAAS Shopping Editorial';
+        $articleSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BlogPosting',
+            'headline' => $post->title,
+            'description' => $articleDescription,
+            'image' => [$articleImage],
+            'datePublished' => $post->published_at->toIso8601String(),
+            'dateModified' => $post->updated_at->toIso8601String(),
+            'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $articleUrl],
+            'articleSection' => $post->category?->name ?? 'Journal',
+            'author' => ['@type' => 'Person', 'name' => $articleAuthor],
+            'publisher' => [
+                '@type' => 'Organization',
+                'name' => 'NAAS Shopping',
+                'logo' => ['@type' => 'ImageObject', 'url' => asset('images/naas-logo.jpeg')],
+            ],
+        ];
+        $articleBreadcrumbs = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => route('blog.index')],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => $post->title, 'item' => $articleUrl],
+            ],
+        ];
+    @endphp
+    <x-seo-meta
+        :title="$articleTitle"
+        :description="$articleDescription"
+        :canonical="$articleUrl"
+        :image="$articleImage"
+        type="article"
+        :published-time="$post->published_at->toIso8601String()"
+        :modified-time="$post->updated_at->toIso8601String()"
+        :author="$articleAuthor"
+    />
+    <script type="application/ld+json">{!! json_encode($articleSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    <script type="application/ld+json">{!! json_encode($articleBreadcrumbs, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
+
 <div class="min-h-screen">
-    @push('meta')
-        <meta name="description" content="{{ $post->meta_description ?: $post->excerpt }}">
-        <meta property="og:title" content="{{ $post->meta_title ?: $post->title }}">
-        <meta property="og:description" content="{{ $post->meta_description ?: $post->excerpt }}">
-        @if($post->featured_image)<meta property="og:image" content="{{ asset('storage/'.$post->featured_image) }}">@endif
-    @endpush
 
     <article>
         <header class="max-w-4xl mx-auto px-4 pt-14 pb-10 text-center">

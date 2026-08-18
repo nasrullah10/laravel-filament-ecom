@@ -1,3 +1,23 @@
+@push('meta')
+    @php
+        $shopTitle = trim($search) !== ''
+            ? 'Search results for '.$search.' - NAAS Shopping'
+            : 'Shop Modest Fashion Online - NAAS Shopping';
+        $shopDescription = trim($search) !== ''
+            ? 'Browse NAAS Shopping products matching '.$search.'.'
+            : 'Shop abayas, hijabs, bedsheets, niqabs and premium modest fashion online at NAAS Shopping.';
+        $shopCanonical = $category
+            ? route('products', ['category' => $category])
+            : route('products');
+    @endphp
+    <x-seo-meta
+        :title="$shopTitle"
+        :description="$shopDescription"
+        :canonical="$shopCanonical"
+        :robots="trim($search) !== '' ? 'noindex,follow' : 'index,follow,max-image-preview:large'"
+    />
+@endpush
+
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
     @if(trim($search) !== '')
         <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-naas-cream-dark pb-5">
