@@ -40,6 +40,7 @@ return 'Email sent successfully!';
 
 use App\Http\Controllers\Auth\GoogleController;
 // routes/web.php
+
 Route::get('/html-sitemap', \App\Livewire\HtmlSitemap::class)->name('html-sitemap');
 Route::get('/sitemap.xml', function () {
     $sitemapPath = public_path('sitemap.xml');
