@@ -28,6 +28,14 @@
                     <div class="flex-1 border-t border-gray-200"></div>
                 </div>
 
+                @if ($errors->any())
+                <div class="mb-4 rounded-lg p-3" role="alert" aria-live="polite"
+                     style="display: block; background-color: #fee2e2; border: 1px solid #ef4444; color: #991b1b; font-size: 14px;">
+                    <strong style="display: block; margin-bottom: 4px;">Please check your details</strong>
+                    {{ $errors->first() }}
+                </div>
+                @endif
+
                 <form wire:submit.prevent="save" class="space-y-3">
 
                     {{-- Name --}}
@@ -39,11 +47,12 @@
                             type="text"
                             wire:model="name"
                             placeholder="Please Enter Your Name"
-                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm @error('name') border-red-500 @enderror
                             focus:ring-2 focus:ring-naas-terracotta/30 focus:border-naas-terracotta
-                            outline-none transition">
+                            outline-none transition"
+                            @error('name') style="border-color: #ef4444;" aria-invalid="true" @enderror>
                         @error('name')
-                        <p class="text-red-500 text-[10px] mt-0.5">{{ $message }}</p>
+                        <p class="mt-1" style="color: #dc2626; font-size: 13px;">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -56,11 +65,12 @@
                             type="email"
                             wire:model="email"
                             placeholder="Please Enter Your Email Address Here"
-                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm @error('email') border-red-500 @enderror
                             focus:ring-2 focus:ring-naas-terracotta/30 focus:border-naas-terracotta
-                            outline-none transition">
+                            outline-none transition"
+                            @error('email') style="border-color: #ef4444;" aria-invalid="true" @enderror>
                         @error('email')
-                        <p class="text-red-500 text-[10px] mt-0.5">{{ $message }}</p>
+                        <p class="mt-1" style="color: #dc2626; font-size: 13px;">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -73,19 +83,23 @@
                             type="password"
                             wire:model="password"
                             placeholder="••••••••"
-                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm @error('password') border-red-500 @enderror
                             focus:ring-2 focus:ring-naas-terracotta/30 focus:border-naas-terracotta
-                            outline-none transition">
+                            outline-none transition"
+                            @error('password') style="border-color: #ef4444;" aria-invalid="true" @enderror>
                         @error('password')
-                        <p class="text-red-500 text-[10px] mt-0.5">{{ $message }}</p>
+                        <p class="mt-1" style="color: #dc2626; font-size: 13px;">{{ $message }}</p>
                         @enderror
                     </div>
 
                     {{-- Register Button --}}
                     <button
                         type="submit"
+                        wire:loading.attr="disabled"
+                        wire:target="save"
                         class="w-full bg-naas-green hover:bg-naas-terracotta text-white py-2.5 rounded-lg font-semibold tracking-wide text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-                        Create Account
+                        <span wire:loading.remove wire:target="save">Create Account</span>
+                        <span wire:loading wire:target="save">Creating Account...</span>
                     </button>
 
                 </form>

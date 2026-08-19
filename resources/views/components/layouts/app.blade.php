@@ -153,6 +153,15 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
     <!-- LIVEWIRE NAVBAR COMPONENT -->
     <livewire:partials.navbar />
 
+    @if(session()->has('success'))
+        <div role="status" aria-live="polite"
+             style="position: relative; z-index: 50; margin: 12px auto; max-width: 64rem; padding: 12px 44px 12px 16px; border: 1px solid #16a34a; border-radius: 8px; background: #dcfce7; color: #166534; font-size: 14px;">
+            {{ session('success') }}
+            <button type="button" aria-label="Close message" onclick="this.parentElement.remove()"
+                    style="position: absolute; right: 12px; top: 8px; border: 0; background: transparent; color: #166534; font-size: 20px; cursor: pointer;">&times;</button>
+        </div>
+    @endif
+
     <!-- Main Content -->
     <main>
         @hasSection('content')
@@ -242,7 +251,56 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
     </footer>
 
     @livewireScripts
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        (() => {
+            const showReviewMedia = (slider, index) => {
+                const track = slider.querySelector('[id^="review-media-track-"]');
+                const slides = track ? track.children : [];
+                if (!track || !slides.length) return;
+
+                const target = (Number(index) + slides.length) % slides.length;
+                slider.dataset.active = target;
+                track.scrollTo({ left: track.clientWidth * target, behavior: 'smooth' });
+
+                slider.querySelectorAll('[data-review-go]').forEach((control) => {
+                    if (control.closest('[id^="review-media-"]')) return;
+                    control.style.opacity = Number(control.dataset.reviewGo) === target ? '1' : '.55';
+                });
+
+                slides.forEach((slide, slideIndex) => {
+                    if (slideIndex !== target) {
+                        slide.querySelectorAll('video').forEach((video) => video.pause());
+                    }
+                });
+            };
+
+            document.addEventListener('click', (event) => {
+                const control = event.target.closest('[data-review-go]');
+                if (!control) return;
+
+                event.preventDefault();
+                const slider = control.closest('.review-media-slider');
+                if (!slider) return;
+                showReviewMedia(slider, control.dataset.reviewGo);
+                slider.dataset.lastInteraction = Date.now();
+            });
+
+            setInterval(() => {
+                if (document.hidden) return;
+
+                document.querySelectorAll('.review-media-slider').forEach((slider) => {
+                    const track = slider.querySelector('[id^="review-media-track-"]');
+                    if (!track || track.children.length < 2) return;
+                    if (slider.matches(':hover')) return;
+                    if ([...slider.querySelectorAll('video')].some((video) => !video.paused)) return;
+                    if (Date.now() - Number(slider.dataset.lastInteraction || 0) < 4000) return;
+
+                    const next = (Number(slider.dataset.active || 0) + 1) % track.children.length;
+                    showReviewMedia(slider, next);
+                });
+            }, 4000);
+        })();
+    </script>
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

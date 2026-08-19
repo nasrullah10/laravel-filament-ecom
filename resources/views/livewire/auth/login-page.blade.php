@@ -29,9 +29,11 @@
                 </div>
 
                 {{-- Error Alert --}}
-                @if (session()->has('error'))
-                <div class="mb-3 bg-red-500 text-xs text-white rounded-lg p-3" role="alert">
-                    {{ session('error') }}
+                @if ($authError || $errors->any())
+                <div class="mb-4 rounded-lg p-3" role="alert" aria-live="polite"
+                     style="display: block; background-color: #fee2e2; border: 1px solid #ef4444; color: #991b1b; font-size: 14px;">
+                    <strong style="display: block; margin-bottom: 4px;">Unable to sign in</strong>
+                    {{ $authError ?: $errors->first() }}
                 </div>
                 @endif
 
@@ -47,9 +49,10 @@
                                 type="email"
                                 wire:model="email"
                                 placeholder="Enter Your Email Address Here"
-                                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+                                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm @error('email') border-red-500 @enderror
                                 focus:ring-2 focus:ring-naas-terracotta/30 focus:border-naas-terracotta
-                                outline-none transition">
+                                outline-none transition"
+                                @error('email') style="border-color: #ef4444;" aria-invalid="true" @enderror>
                             @error('email')
                             <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                                 <svg class="h-4 w-4 text-red-500" fill="currentColor" viewBox="0 0 16 16">
@@ -59,7 +62,7 @@
                             @enderror
                         </div>
                         @error('email')
-                        <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p>
+                        <p class="mt-1" style="color: #dc2626; font-size: 13px;">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -78,9 +81,10 @@
                                 type="password"
                                 wire:model="password"
                                 placeholder="••••••••"
-                                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+                                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm @error('password') border-red-500 @enderror
                                 focus:ring-2 focus:ring-naas-terracotta/30 focus:border-naas-terracotta
-                                outline-none transition">
+                                outline-none transition"
+                                @error('password') style="border-color: #ef4444;" aria-invalid="true" @enderror>
                             @error('password')
                             <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                                 <svg class="h-4 w-4 text-red-500" fill="currentColor" viewBox="0 0 16 16">
@@ -90,15 +94,18 @@
                             @enderror
                         </div>
                         @error('password')
-                        <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p>
+                        <p class="mt-1" style="color: #dc2626; font-size: 13px;">{{ $message }}</p>
                         @enderror
                     </div>
 
                     {{-- Sign In Button --}}
                     <button
                         type="submit"
+                        wire:loading.attr="disabled"
+                        wire:target="save"
                         class="w-full bg-naas-green hover:bg-naas-terracotta text-white py-2.5 rounded-lg font-semibold tracking-wide text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-                        Sign In
+                        <span wire:loading.remove wire:target="save">Sign In</span>
+                        <span wire:loading wire:target="save">Signing In...</span>
                     </button>
 
                 </form>
