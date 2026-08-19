@@ -25,9 +25,9 @@
                                 <p class="text-lg font-medium leading-4 text-left text-gray-800">
                                     {{ $order->address?->first_name }}
                                 </p>
-                                <p class="text-sm leading-4 text-gray-500">{{ $order->address->street_address }}</p>
-                                <p class="text-sm leading-4 text-gray-500">{{ $order->address->city }}, {{ $order->address->state }}, {{ $order->address->zip_code }}</p>
-                                <p class="text-sm leading-4 text-gray-500">Phone: {{ $order->address->phone }}</p>
+                                <p class="text-sm leading-4 text-gray-500">{{ $order->address?->street_address }}</p>
+                                <p class="text-sm leading-4 text-gray-500">{{ $order->address?->city }}, {{ $order->address?->state }}, {{ $order->address?->zip_code }}</p>
+                                <p class="text-sm leading-4 text-gray-500">Phone: {{ $order->address?->phone }}</p>
                             </div>
                         </div>
                     </div>

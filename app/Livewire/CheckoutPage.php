@@ -172,6 +172,10 @@ class CheckoutPage extends Component
         $address->zip_code = $this->zip_code;
         
         $redirect_url ='';
+
+        // Order ID payment redirect banane se pehle required hai.
+        $order->save();
+        session()->put('last_order_id', $order->id);
         
         if($order->payment_method === 'stripe') {
             Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -184,7 +188,8 @@ class CheckoutPage extends Component
                 'line_items' => $stripe_line_items,
                 'mode' => 'payment',
                 'customer_email' => $customerEmail,
-                'success_url' => route('checkout.success'). '?session_id={CHECKOUT_SESSION_ID}',
+                'metadata' => ['order_id' => (string) $order->id],
+                'success_url' => route('checkout.success', ['orderId' => $order->id]).'&session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('checkout.cancel'),
             ]);
             $redirect_url = $sessionCheckout->url;
@@ -196,7 +201,6 @@ class CheckoutPage extends Component
             // $redirect_url = route('checkout.success');
         }
         
-        $order->save();
         $address->order_id = $order->id;
         $address->save();
         

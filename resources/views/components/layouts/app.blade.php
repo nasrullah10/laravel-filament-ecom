@@ -162,6 +162,15 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
         </div>
     @endif
 
+    @if(session()->has('error'))
+        <div role="alert" aria-live="polite"
+             style="position: relative; z-index: 50; margin: 12px auto; max-width: 64rem; padding: 12px 44px 12px 16px; border: 1px solid #dc2626; border-radius: 8px; background: #fee2e2; color: #991b1b; font-size: 14px;">
+            {{ session('error') }}
+            <button type="button" aria-label="Close message" onclick="this.parentElement.remove()"
+                    style="position: absolute; right: 12px; top: 8px; border: 0; background: transparent; color: #991b1b; font-size: 20px; cursor: pointer;">&times;</button>
+        </div>
+    @endif
+
     <!-- Main Content -->
     <main>
         @hasSection('content')
