@@ -66,7 +66,26 @@ class ProductResource extends Resource
                         ->directory('products')
                         ->maxFiles(5)
                         ->reorderable(),
-                    ])
+                    ]),
+
+                    Section::make('Search Engine Optimization')->schema([
+                        TextInput::make('meta_title')
+                            ->label('Meta Title')
+                            ->maxLength(60)
+                            ->live()
+                            ->hint(fn (Forms\Get $get) => strlen((string) $get('meta_title')).'/60 characters')
+                            ->helperText('Google title. Leave blank to use the product name automatically.')
+                            ->placeholder('e.g. Premium Abaya for Women in Pakistan'),
+
+                        Forms\Components\Textarea::make('meta_description')
+                            ->label('Meta Description')
+                            ->rows(3)
+                            ->maxLength(160)
+                            ->live()
+                            ->hint(fn (Forms\Get $get) => strlen((string) $get('meta_description')).'/160 characters')
+                            ->helperText('Short Google search description. Leave blank to use the product description automatically.')
+                            ->placeholder('Describe this product clearly for search results...'),
+                    ])->columns(1)->collapsible(),
                 ])->columnSpan(2),
 
                 Group::make()->schema([

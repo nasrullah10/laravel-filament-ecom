@@ -1,11 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /login
-Disallow: /register
-Disallow: /cart
-Disallow: /checkout
-Disallow: /user/
-Disallow: /livewire/
 
 Sitemap: https://naasshopping.com/sitemap.xml

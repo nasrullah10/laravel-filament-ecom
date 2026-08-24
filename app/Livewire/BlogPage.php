@@ -54,6 +54,10 @@ class BlogPage extends Component
             ->orderBy('name')
             ->get();
 
-        return view('livewire.blog-page', compact('posts', 'categories'));
+        $pageTitle = $this->category
+            ? ucwords(str_replace('-', ' ', $this->category)).' Articles - NAAS Shopping Blog'
+            : 'NAAS Shopping Blog - Style Guides & Inspiration';
+
+        return view('livewire.blog-page', compact('posts', 'categories'))->title($pageTitle);
     }
 }

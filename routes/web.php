@@ -26,18 +26,6 @@ use App\Livewire\Pages\ShowPage;
 |--------------------------------------------------------------------------
 */
 
-use Illuminate\Support\Facades\Mail;
-
-Route::get('/test-email', function () {
-Mail::raw('This is a test email from NAAS Shopping.', function ($message) {
-$message->to('info@naasshopping.com')
-->subject('NAAS Shopping Email Test');
-});
-
-return 'Email sent successfully!';
-});
-
-
 use App\Http\Controllers\Auth\GoogleController;
 // routes/web.php
 

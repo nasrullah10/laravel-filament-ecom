@@ -96,10 +96,15 @@
                         </p>
                         @endif
 
-                        <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight mb-6 animate-fade-up"
-                            style="animation-delay: 0.5s">
-                            {{ $slider->title }}
-                        </h1>
+                        @if($index === 0)
+                            <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight mb-6 animate-fade-up" style="animation-delay: 0.5s">
+                                {{ $slider->title }}
+                            </h1>
+                        @else
+                            <h2 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight mb-6 animate-fade-up" style="animation-delay: 0.5s">
+                                {{ $slider->title }}
+                            </h2>
+                        @endif
 
                         @if($slider->description)
                         <p class="text-base md:text-lg font-light mb-8 opacity-90 max-w-md animate-fade-up
@@ -232,6 +237,7 @@
             }
         }" x-init="autoSlide()" class="relative h-[600px] md:h-[700px] lg:h-[calc(100vh-80px)] overflow-hidden">
 
+            <h1 class="sr-only">Discover NAAS Shopping Best Sellers</h1>
             <template x-for="(product, index) in products" :key="index">
                 <div x-show="currentSlide === index" 
                      x-transition:enter="transition ease-out duration-1000"
@@ -251,7 +257,7 @@
                     <div class="relative z-10 flex items-center h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="max-w-xl">
                             <p class="text-white/80 text-sm tracking-[0.3em] uppercase mb-3 font-light">Best Selling</p>
-                            <h1 class="font-serif text-5xl md:text-6xl text-white mb-4 leading-tight" x-text="product.name"></h1>
+                            <h2 class="font-serif text-5xl md:text-6xl text-white mb-4 leading-tight" x-text="product.name"></h2>
                             <p class="text-white/90 text-lg mb-2 font-light" x-text="product.description ? product.description.substring(0, 100) + '...' : ''"></p>
                             <p class="text-white text-2xl font-serif mb-8" x-text="'Rs. ' + product.price"></p>
                             <a :href="'/products/' + product.slug" class="inline-block bg-white text-gray-900 px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-gray-900 hover:text-white transition-all duration-300">SHOP NOW</a>

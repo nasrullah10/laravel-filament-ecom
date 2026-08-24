@@ -4,16 +4,6 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-88BS9Z6DB1"></script>
   
-   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Naasshopping",
-  "url": "https://naasshopping.com/",
-  "logo": "https://naasshopping.com/images/naas-logo.jpeg"
-}
-</script>
-
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -234,9 +224,9 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
                 <div>
                     <h4 class="text-xs tracking-widest mb-6 text-gray-400">MAISON</h4>
                     <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="hover:text-naas-terracotta transition">Our Story</a></li>
-                        <li><a href="#" class="hover:text-naas-terracotta transition">Careers</a></li>
-                        <li><a href="#" class="hover:text-naas-terracotta transition">Press</a></li>
+                        <li><a href="{{ route('about-us') }}" class="hover:text-naas-terracotta transition">Our Story</a></li>
+                        <li><a href="{{ route('contact-us') }}" class="hover:text-naas-terracotta transition">Contact Us</a></li>
+                        <li><a href="{{ route('blog.index') }}" class="hover:text-naas-terracotta transition">Journal</a></li>
                     </ul>
                     <div class="flex space-x-4 mt-6">
                         <a href="https://www.facebook.com/NaasShopping" target="_blank" rel="noopener noreferrer" class="hover:text-naas-terracotta transition">

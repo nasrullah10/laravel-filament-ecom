@@ -174,7 +174,7 @@
                                         <img class="h-16 w-16 mr-4 object-cover" 
                                              src="{{ url('storage', $firstImage) }}" 
                                              alt="{{ $item->product->name }}"
-                                             onerror="this.src='https://via.placeholder.com/64x64?text=No+Image'">
+                                             onerror="this.onerror=null;this.src='{{ asset('images/naas-logo.jpeg') }}'">
                                     @else
                                         <div class="h-16 w-16 mr-4 bg-gray-100 flex items-center justify-center">
                                             <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

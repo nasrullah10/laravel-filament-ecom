@@ -1,0 +1,19 @@
+# NAAS Shopping
+
+> NAAS Shopping is a Pakistan-based online store for abayas, hijabs, bedsheets, niqabs, jewellery and modest fashion products.
+
+## Main pages
+
+- [Home](https://naasshopping.com/)
+- [Shop](https://naasshopping.com/products)
+- [Categories](https://naasshopping.com/categories)
+- [Blog](https://naasshopping.com/blog)
+- [About NAAS Shopping](https://naasshopping.com/about-us)
+- [Contact](https://naasshopping.com/contact-us)
+
+## Crawling
+
+- [XML sitemap](https://naasshopping.com/sitemap.xml)
+- [Robots policy](https://naasshopping.com/robots.txt)
+
+Product availability, pricing and descriptions should be read from each current product page.

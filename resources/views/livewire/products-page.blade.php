@@ -1,20 +1,24 @@
 @push('meta')
     @php
-        $shopTitle = trim($search) !== ''
+        $shopTitle = $seoCategory
+            ? $seoCategory->name.' Online in Pakistan - NAAS Shopping'
+            : (trim($search) !== ''
             ? 'Search results for '.$search.' - NAAS Shopping'
-            : 'Shop Modest Fashion Online - NAAS Shopping';
-        $shopDescription = trim($search) !== ''
+            : 'Shop Modest Fashion Online - NAAS Shopping');
+        $shopDescription = $seoCategory
+            ? 'Shop '.$seoCategory->name.' online at NAAS Shopping with quality products and delivery across Pakistan.'
+            : (trim($search) !== ''
             ? 'Browse NAAS Shopping products matching '.$search.'.'
-            : 'Shop abayas, hijabs, bedsheets, niqabs and premium modest fashion online at NAAS Shopping.';
-        $shopCanonical = $category
-            ? route('products', ['category' => $category])
+            : 'Shop abayas, hijabs, bedsheets, niqabs and premium modest fashion online at NAAS Shopping.');
+        $shopCanonical = $seoCategory
+            ? route('products', ['category' => $seoCategory->slug])
             : route('products');
     @endphp
     <x-seo-meta
         :title="$shopTitle"
         :description="$shopDescription"
         :canonical="$shopCanonical"
-        :robots="trim($search) !== '' ? 'noindex,follow' : 'index,follow,max-image-preview:large'"
+        :robots="$hasNonCanonicalFilters ? 'noindex,follow' : 'index,follow,max-image-preview:large'"
     />
 @endpush
 
@@ -37,9 +41,11 @@
         </ol>
     </nav>
 
-    <h1 class="font-serif text-4xl md:text-5xl text-[#1a3c34] mb-8">
-        Shop
-    </h1>
+    @if(trim($search) === '')
+        <h1 class="font-serif text-4xl md:text-5xl text-[#1a3c34] mb-8">
+            {{ $seoCategory ? 'Shop '.$seoCategory->name : 'Shop Modest Fashion' }}
+        </h1>
+    @endif
 
     <section class="py-10 bg-white font-poppins">
         <div class="px-4 py-4 mx-auto max-w-7xl lg:py-6 md:px-6">
@@ -183,10 +189,10 @@
                                             }
                                             $firstImage = $images[0] ?? $product->image ?? null;
                                         @endphp
-                                        <img src="{{ $firstImage ? asset('storage/' . $firstImage) : 'https://via.placeholder.com/400x500?text=No+Image' }}"
+                                        <img src="{{ $firstImage ? asset('storage/' . $firstImage) : asset('images/naas-logo.jpeg') }}"
                                          alt="{{ $product->name }}"
                                          class="object-cover w-full h-72 mx-auto group-hover:scale-105 transition duration-700"
-                                         onerror="this.src='https://via.placeholder.com/400x500?text=No+Image'">
+                                         onerror="this.onerror=null;this.src='{{ asset('images/naas-logo.jpeg') }}'">
                                     </a>
                                     
                                     @if($product->on_sale || $product->compare_price > $product->price)
@@ -217,15 +223,14 @@
                                 </div>
                                 
                                 <div class="flex justify-center p-4 border-t border-gray-100">
-                                    <a wire:click.prevent="addToCart({{ $product->id }})" 
-                                       href="#" 
+                                    <button type="button" wire:click="addToCart({{ $product->id }})"
                                        class="text-xs tracking-widest uppercase text-gray-500 flex items-center space-x-2 hover:text-[#1a3c34] transition duration-300">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
                                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                                         </svg>
                                         <span wire:loading.remove wire:target="addToCart({{ $product->id }})">Add to Bag</span>
                                         <span wire:loading wire:target="addToCart({{ $product->id }})">Adding...</span>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>

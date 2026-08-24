@@ -6,12 +6,17 @@
             ->values()
             ->all();
         $productUrl = route('product-detail', $product->slug);
-        $productTitle = $product->name.' - NAAS Shopping';
-        $productDescription = \Illuminate\Support\Str::limit(
+        $fallbackProductDescription = \Illuminate\Support\Str::limit(
             trim(preg_replace('/\s+/', ' ', strip_tags(\Illuminate\Support\Str::markdown($product->description ?? '')))),
             160,
             ''
         );
+        $productTitle = filled($product->meta_title)
+            ? trim($product->meta_title)
+            : $product->name.' - NAAS Shopping';
+        $productDescription = filled($product->meta_description)
+            ? trim($product->meta_description)
+            : $fallbackProductDescription;
         $productImage = $schemaImages[0] ?? asset('images/naas-logo.jpeg');
 
         $productSchema = [
@@ -137,9 +142,9 @@
                 <div class="w-full px-4 md:w-1/2">
                     <div class="lg:pl-20">
                         <div class="mb-8 [&ul]:list-disc [&ul]:ml-4">
-                            <h2 class="font-serif text-3xl md:text-4xl text-[#1a3c34] mb-4">
+                            <h1 class="font-serif text-3xl md:text-4xl text-[#1a3c34] mb-4">
                                 {{ $product->name }}
-                            </h2>
+                            </h1>
 
                             @if($reviewCount > 0)
                                 <a href="#customer-reviews" class="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-[#1a3c34]">
@@ -490,7 +495,7 @@
     }
     $firstImage = $images[0] ?? null;
 @endphp
-                        <img src="{{ $firstImage ? asset('storage/' . $firstImage) : 'https://via.placeholder.com/400x500?text=No+Image' }}" 
+                        <img src="{{ $firstImage ? asset('storage/' . $firstImage) : asset('images/naas-logo.jpeg') }}"
                              alt="{{ $related->name }}" 
                              class="w-full h-[350px] object-cover group-hover:scale-105 transition duration-700"
                              onerror="this.style.display='none'">

@@ -82,6 +82,10 @@ class ProductsPage extends Component
 
     public function render()
     {
+        $seoCategory = $this->category
+            ? Category::where('slug', $this->category)->where('is_active', 1)->first()
+            : null;
+
         $products = Product::query()->where('is_active', 1);
 
         if (trim($this->search) !== '') {
@@ -140,10 +144,26 @@ class ProductsPage extends Component
         $brands = Brand::where('is_active', 1)->get();
         $categories = Category::where('is_active', 1)->get();
         
+        $hasNonCanonicalFilters = trim($this->search) !== ''
+            || ! empty($this->selected_brands)
+            || ! empty($this->featured)
+            || ! empty($this->on_sale)
+            || (int) $this->price_range !== 50000
+            || $this->sort !== 'latest'
+            || (! $seoCategory && ! empty($this->selected_categories));
+
+        $pageTitle = $seoCategory
+            ? $seoCategory->name.' Online in Pakistan - NAAS Shopping'
+            : (trim($this->search) !== ''
+                ? 'Search Results for '.trim($this->search).' - NAAS Shopping'
+                : 'Shop Modest Fashion Online - NAAS Shopping');
+
         return view('livewire.products-page', [
             'products' => $products->paginate(18),
             'brands' => $brands,
             'categories' => $categories,
-        ]);
+            'seoCategory' => $seoCategory,
+            'hasNonCanonicalFilters' => $hasNonCanonicalFilters,
+        ])->title($pageTitle);
     }
 }

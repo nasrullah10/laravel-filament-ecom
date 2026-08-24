@@ -265,6 +265,6 @@ class ProductDetailPage extends Component
             'averageRating' => $averageRating,
             'ratingBreakdown' => $ratingBreakdown,
             'filteredReviewCount' => $reviews->total(),
-        ])->title($product->name.' - NAAS Shopping');
+        ])->title(filled($product->meta_title) ? $product->meta_title : $product->name.' - NAAS Shopping');
     }
 }

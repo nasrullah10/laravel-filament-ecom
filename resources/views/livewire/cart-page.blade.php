@@ -51,7 +51,7 @@
                                         <img src="{{ asset('storage/' . $firstImage) }}" 
                                              alt="{{ $item['name'] }}" 
                                              class="h-16 w-16 mr-4 object-cover"
-                                             onerror="this.src='https://via.placeholder.com/64x64?text=No+Image'">
+                                             onerror="this.onerror=null;this.src='{{ asset('images/naas-logo.jpeg') }}'">
                                     @else
                                         <div class="h-16 w-16 mr-4 bg-gray-100 flex items-center justify-center">
                                             <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,7 +173,7 @@
                             }
                             $firstImage = $images[0] ?? null;
                         @endphp
-                        <img src="{{ $firstImage ? asset('storage/' . $firstImage) : 'https://via.placeholder.com/400x500?text=No+Image' }}" 
+                        <img src="{{ $firstImage ? asset('storage/' . $firstImage) : asset('images/naas-logo.jpeg') }}"
                              alt="{{ $related->name }}" 
                              class="w-full h-[350px] object-cover group-hover:scale-105 transition duration-700"
                              onerror="this.style.display='none'">
