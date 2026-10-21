@@ -2,16 +2,16 @@
     <!-- Breadcrumb -->
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">
-            <li><a href="/" class="hover:text-[#1a3c34] transition">{{ __('Home') }}</a></li>
+            <li><a href="/" class="hover:text-[#1a3c34] transition">Home</a></li>
             <li>/</li>
-            <li><a href="{{ route('products') }}" class="hover:text-[#1a3c34] transition">{{ __('Shop') }}</a></li>
+            <li><a href="{{ route('products') }}" class="hover:text-[#1a3c34] transition">Shop</a></li>
             <li>/</li>
-            <li class="text-[#1a3c34]">{{ __('My Orders') }}</li>
+            <li class="text-[#1a3c34]">My Orders</li>
         </ol>
     </nav>
 
     <h1 class="font-serif text-4xl md:text-5xl text-[#1a3c34] mb-8">
-        {{ __('My Orders') }}
+        My Orders
     </h1>
 
     <div class="flex flex-col bg-white p-5 mt-4">
@@ -21,8 +21,8 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
                             <tr class="bg-[#f5f0e8]">
-                                <th scope="col" class="px-6 py-4 text-start text-xs tracking-widest uppercase font-medium text-[#1a3c34]">{{ __('Order') }}</th>
-                                <th scope="col" class="px-6 py-4 text-start text-xs tracking-widest uppercase font-medium text-[#1a3c34]">{{ __('Date') }}</th>
+                                <th scope="col" class="px-6 py-4 text-start text-xs tracking-widest uppercase font-medium text-[#1a3c34]">Order</th>
+                                <th scope="col" class="px-6 py-4 text-start text-xs tracking-widest uppercase font-medium text-[#1a3c34]">Date</th>
                                 <th scope="col" class="px-6 py-4 text-start text-xs tracking-widest uppercase font-medium text-[#1a3c34]">Order Status</th>
                                 <th scope="col" class="px-6 py-4 text-start text-xs tracking-widest uppercase font-medium text-[#1a3c34]">Payment Status</th>
                                 <th scope="col" class="px-6 py-4 text-start text-xs tracking-widest uppercase font-medium text-[#1a3c34]">Order Amount</th>
@@ -68,7 +68,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{!! $payment_status !!}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($order->grand_total) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                    <a href="/my-order-detail/{{ $order->id }}" class="inline-block bg-[#1a3c34] text-white py-2.5 px-6 text-xs tracking-widest uppercase hover:bg-opacity-90 transition">{{ __('View Details') }}</a>
+                                    <a href="/my-order-detail/{{ $order->id }}" class="inline-block bg-[#1a3c34] text-white py-2.5 px-6 text-xs tracking-widest uppercase hover:bg-opacity-90 transition">View Details</a>
                                 </td>
                             </tr>
                             @endforeach

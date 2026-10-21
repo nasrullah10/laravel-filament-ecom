@@ -2,16 +2,16 @@
     <!-- Breadcrumb -->
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">
-            <li><a href="/" class="hover:text-[#1a3c34] transition">{{ __('Home') }}</a></li>
+            <li><a href="/" class="hover:text-[#1a3c34] transition">Home</a></li>
             <li>/</li>
-            <li><a href="/my-orders" class="hover:text-[#1a3c34] transition">{{ __('My Orders') }}</a></li>
+            <li><a href="/my-orders" class="hover:text-[#1a3c34] transition">My Orders</a></li>
             <li>/</li>
             <li class="text-[#1a3c34]">Order #{{ $order->id }}</li>
         </ol>
     </nav>
 
     <h1 class="font-serif text-4xl md:text-5xl text-[#1a3c34] mb-8">
-        {{ __('Order Details') }}
+        Order Details
     </h1>
 
     <!-- Grid -->
@@ -148,9 +148,9 @@
                     <thead>
                         <tr class="border-b border-gray-200">
                             <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Product</th>
-                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">{{ __('Price') }}</th>
-                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">{{ __('Quantity') }}</th>
-                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">{{ __('Total') }}</th>
+                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Price</th>
+                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Quantity</th>
+                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -198,13 +198,13 @@
 
             <!-- Shipping Address -->
             <div class="bg-white p-6 mb-4">
-                <h2 class="font-serif text-2xl text-[#1a3c34] mb-4">{{ __('Shipping Address') }}</h2>
+                <h2 class="font-serif text-2xl text-[#1a3c34] mb-4">Shipping Address</h2>
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm text-gray-600">{{ $address->full_address }}, {{ $address->city }}, {{ $address->state??'' }}, {{ $address->zip_code??'' }}</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-xs tracking-widest uppercase text-gray-500 mb-1">{{ __('Phone') }}</p>
+                        <p class="text-xs tracking-widest uppercase text-gray-500 mb-1">Phone</p>
                         <p class="text-sm font-medium text-[#1a3c34]">{{ $address->phone }}</p>
                     </div>
                 </div>
@@ -216,7 +216,7 @@
             <div class="bg-[#f5f0e8] p-6">
                 <h2 class="font-serif text-2xl text-[#1a3c34] mb-6">Summary</h2>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
-                    <span>{{ __('Subtotal') }}</span>
+                    <span>Subtotal</span>
                     <span class="font-medium text-gray-900">{{ \App\Support\Price::format($order->grand_total) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
@@ -224,8 +224,8 @@
                     <span class="font-medium text-gray-900">{{ \App\Support\Price::format(0) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
-                    <span>{{ __('Shipping') }}</span>
-                    <span class="font-medium text-[#1a3c34]">{{ __('Free') }}</span>
+                    <span>Shipping</span>
+                    <span class="font-medium text-[#1a3c34]">Free</span>
                 </div>
                 <div class="border-t border-gray-300 my-4"></div>
                 <div class="flex justify-between">

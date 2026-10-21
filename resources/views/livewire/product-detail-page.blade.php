@@ -84,9 +84,9 @@
     <!-- Breadcrumb -->
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">
-            <li><a href="/" class="hover:text-[#1a3c34] transition">{{ __('Home') }}</a></li>
+            <li><a href="/" class="hover:text-[#1a3c34] transition">Home</a></li>
             <li>/</li>
-            <li><a href="/products" class="hover:text-[#1a3c34] transition">{{ __('Shop') }}</a></li>
+            <li><a href="/products" class="hover:text-[#1a3c34] transition">Shop</a></li>
             <li>/</li>
             <li class="text-[#1a3c34]">{{ $product->name }}</li>
         </ol>
@@ -130,7 +130,7 @@
                                 </span>
                                 <div>
                                     <h2 class="text-sm font-medium text-[#1a3c34] tracking-wider uppercase">Free Shipping</h2>
-                                    <p class="text-xs text-gray-500 mt-0.5">{{ __('On orders over Rs. 10,000') }}</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">On orders over {{ \App\Support\Price::format(10000) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                         <!-- Quantity Section -->
                         <div class="w-32 mb-8">
                             <label class="w-full pb-2 text-xs tracking-widest uppercase text-gray-500 border-b border-gray-200 block mb-4">
-                                {{ __('Quantity') }}
+                                Quantity
                             </label>
                             <div class="relative flex flex-row w-full h-12 mt-2 bg-transparent">
                                 <button wire:click="decreaseQuantity" 
@@ -198,7 +198,7 @@
                                     @disabled(! $product->in_stock)
                                     class="w-full py-4 bg-[#1a3c34] text-white text-sm tracking-widest uppercase hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300">
                                 <span wire:loading.remove wire:target="addToCart({{ $product->id }})">Add to Bag</span>
-                                <span wire:loading wire:target="addToCart({{ $product->id }})">{{ __('Adding...') }}</span>
+                                <span wire:loading wire:target="addToCart({{ $product->id }})">Adding...</span>
                             </button>
 
                             <button type="button" wire:click="buyNow({{ $product->id }})"
@@ -214,7 +214,7 @@
                         <div class="mt-4">
                             <a href="{{ route('products') }}"
                                class="text-xs tracking-widest uppercase text-gray-500 hover:text-[#1a3c34] transition border-b border-transparent hover:border-[#1a3c34] pb-1">
-                                {{ __('Continue Shopping') }}
+                                Continue Shopping
                             </a>
                         </div>
 
@@ -248,13 +248,13 @@
         <div class="max-w-6xl mx-auto px-4 md:px-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 <div>
-                    <p class="text-xs tracking-[0.2em] text-[#C65D3B] uppercase mb-2">{{ __('Customer Feedback') }}</p>
-                    <h2 class="font-serif text-3xl text-[#1B4332]">{{ __('Product Reviews') }}</h2>
+                    <p class="text-xs tracking-[0.2em] text-[#C65D3B] uppercase mb-2">Customer Feedback</p>
+                    <h2 class="font-serif text-3xl text-[#1B4332]">Product Reviews</h2>
                     @if($reviewCount > 0)
                         <div class="mt-5 rounded-2xl border bg-white p-5" style="border-color:#e7e2d9; box-shadow:0 8px 24px rgba(27,67,50,.06);">
                             <div style="display:flex;align-items:baseline;gap:.5rem;">
                                 <strong style="font-family:serif;font-size:38px;line-height:1;color:#1B4332;">{{ number_format($averageRating, 1) }}</strong>
-                                <span style="color:#6b7280;font-size:13px;">{{ __('out of 5') }}</span>
+                                <span style="color:#6b7280;font-size:13px;">out of 5</span>
                             </div>
                             <div class="mt-2 text-amber-500 tracking-wider" style="color:#d97706;">{{ str_repeat('★', (int) round($averageRating)) }}{{ str_repeat('☆', 5 - (int) round($averageRating)) }}</div>
                             <p class="mt-1 text-sm text-gray-600">Based on {{ $reviewCount }} {{ Str::plural('review', $reviewCount) }}</p>
@@ -274,7 +274,7 @@
                             </div>
                         </div>
                     @else
-                        <p class="mt-4 text-sm text-gray-500">{{ __('No approved reviews yet.') }}</p>
+                        <p class="mt-4 text-sm text-gray-500">No approved reviews yet.</p>
                     @endif
                 </div>
 
@@ -291,14 +291,14 @@
                         @if($canReview)
                             <form wire:submit.prevent="submitReview" class="mb-12 rounded-xl border border-gray-200 bg-[#FAF9F6] p-6 shadow-sm md:p-8">
                                 <div class="mb-6">
-                                    <h3 class="font-serif text-2xl text-[#1B4332]">{{ __('Write a Review') }}</h3>
-                                    <p class="mt-1 text-sm text-gray-500">{{ __('Share your experience with other customers.') }}</p>
+                                    <h3 class="font-serif text-2xl text-[#1B4332]">Write a Review</h3>
+                                    <p class="mt-1 text-sm text-gray-500">Share your experience with other customers.</p>
                                 </div>
 
                                 @if($errors->any())
                                     <div role="alert" class="mb-5 rounded-lg p-4"
                                          style="border: 1px solid #dc2626; background: #fee2e2; color: #991b1b; font-size: 14px;">
-                                        <strong>{{ __('Please correct the highlighted fields.') }}</strong>
+                                        <strong>Please correct the highlighted fields.</strong>
                                         <ul style="margin: 6px 0 0 18px; list-style: disc;">
                                             @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
                                         </ul>
@@ -306,26 +306,26 @@
                                 @endif
 
                                 <div class="mb-5">
-                                    <label for="review-rating" class="block text-sm font-medium text-gray-700 mb-2">{{ __('Your rating') }} <span style="color:#dc2626">*</span></label>
+                                    <label for="review-rating" class="block text-sm font-medium text-gray-700 mb-2">Your rating <span style="color:#dc2626">*</span></label>
                                     <select id="review-rating" wire:model="reviewRating" class="w-full rounded-lg border-gray-300 bg-white focus:border-[#1B4332] focus:ring-[#1B4332]" @error('reviewRating') style="border-color:#dc2626" @enderror>
-                                        <option value="5">{{ __('5 Stars') }}</option><option value="4">{{ __('4 Stars') }}</option>
-                                        <option value="3">{{ __('3 Stars') }}</option><option value="2">{{ __('2 Stars') }}</option><option value="1">{{ __('1 Star') }}</option>
+                                        <option value="5">5 Stars</option><option value="4">4 Stars</option>
+                                        <option value="3">3 Stars</option><option value="2">2 Stars</option><option value="1">1 Star</option>
                                     </select>
                                     @error('reviewRating') <p class="mt-1" style="color:#dc2626;font-size:13px">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="mb-5">
-                                    <label for="review-title" class="block text-sm font-medium text-gray-700 mb-2">{{ __('Review title') }} <span class="font-normal text-gray-400">{{ __('(optional)') }}</span></label>
+                                    <label for="review-title" class="block text-sm font-medium text-gray-700 mb-2">Review title <span class="font-normal text-gray-400">(optional)</span></label>
                                     <input id="review-title" type="text" wire:model="reviewTitle" maxlength="120" placeholder="Summarize your experience" class="w-full rounded-lg border-gray-300 focus:border-[#1B4332] focus:ring-[#1B4332]" @error('reviewTitle') style="border-color:#dc2626" @enderror>
                                     @error('reviewTitle') <p class="mt-1" style="color:#dc2626;font-size:13px">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="mb-5">
-                                    <label for="review-comment" class="block text-sm font-medium text-gray-700 mb-2">{{ __('Your review') }} <span style="color:#dc2626">*</span></label>
+                                    <label for="review-comment" class="block text-sm font-medium text-gray-700 mb-2">Your review <span style="color:#dc2626">*</span></label>
                                     <textarea id="review-comment" wire:model="reviewComment" rows="5" maxlength="2000" placeholder="What did you like or dislike about this product?" class="w-full rounded-lg border-gray-300 focus:border-[#1B4332] focus:ring-[#1B4332]" @error('reviewComment') style="border-color:#dc2626" @enderror></textarea>
-                                    <div class="mt-1 flex justify-between text-xs text-gray-500"><span>{{ __('Minimum 10 characters') }}</span><span>{{ __('Maximum 2000') }}</span></div>
+                                    <div class="mt-1 flex justify-between text-xs text-gray-500"><span>Minimum 10 characters</span><span>Maximum 2000</span></div>
                                     @error('reviewComment') <p class="mt-1" style="color:#dc2626;font-size:13px">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="mb-5">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Add media') }} <span class="font-normal text-gray-400">{{ __('(optional)') }}</span></label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Add media <span class="font-normal text-gray-400">(optional)</span></label>
                                     <div class="mb-4 grid grid-cols-2 gap-3 text-sm" role="group" aria-label="Review media type">
                                         <button type="button" wire:click="selectReviewMedia('image')" aria-pressed="{{ $reviewMediaType === 'image' ? 'true' : 'false' }}"
                                                 class="flex items-center justify-center gap-2 rounded-lg border p-3 font-medium"
@@ -355,11 +355,11 @@
                                 <button type="submit" wire:loading.attr="disabled" wire:target="submitReview,reviewImages,reviewVideo"
                                         class="group inline-flex w-full items-center justify-center gap-3 px-8 py-4 text-sm font-semibold tracking-[0.14em] uppercase text-white disabled:opacity-50 sm:w-auto"
                                         style="background: linear-gradient(135deg, #1B4332 0%, #245b46 100%); color: #ffffff; min-height: 52px; border: 1px solid #1B4332; border-radius: 9999px; box-shadow: 0 8px 20px rgba(27,67,50,.22); cursor:pointer;">
-                                    <span wire:loading.remove wire:target="submitReview">{{ __('Submit My Review') }}</span>
+                                    <span wire:loading.remove wire:target="submitReview">Submit My Review</span>
                                     <span wire:loading.remove wire:target="submitReview" aria-hidden="true" style="font-size:18px;line-height:1">→</span>
-                                    <span wire:loading wire:target="submitReview,reviewImages,reviewVideo">{{ __('Please wait...') }}</span>
+                                    <span wire:loading wire:target="submitReview,reviewImages,reviewVideo">Please wait...</span>
                                 </button>
-                                <p class="mt-3 text-xs text-gray-500">{{ __('Your review will appear after admin approval.') }}</p>
+                                <p class="mt-3 text-xs text-gray-500">Your review will appear after admin approval.</p>
                             </form>
                         @elseif($product->reviews()->where('user_id', auth()->id())->exists())
                             <p class="mb-8 bg-[#FAF9F6] p-4 text-sm text-gray-600">You have already submitted a review for this product.</p>
@@ -367,14 +367,14 @@
                             <p class="mb-8 bg-[#FAF9F6] p-4 text-sm text-gray-600">Reviews can be submitted after your order has been delivered.</p>
                         @endif
                     @else
-                        <p class="mb-8 bg-[#FAF9F6] p-4 text-sm text-gray-600"><a href="{{ route('login') }}" class="font-medium text-[#1B4332] underline">{{ __('Log in') }}</a> to review a product you purchased.</p>
+                        <p class="mb-8 bg-[#FAF9F6] p-4 text-sm text-gray-600"><a href="{{ route('login') }}" class="font-medium text-[#1B4332] underline">Log in</a> to review a product you purchased.</p>
                     @endauth
 
                     @if($reviewCount > 0)
                         <div class="mb-6 rounded-xl border border-gray-200 bg-white p-4" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;border-color:#e7e2d9;">
                             <div style="display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;">
                                 <button type="button" wire:click="filterReviewsByRating('all')"
-                                        style="padding:.5rem .85rem;border-radius:9999px;border:1px solid {{ $reviewRatingFilter === 'all' ? '#1B4332' : '#d1d5db' }};background:{{ $reviewRatingFilter === 'all' ? '#1B4332' : '#fff' }};color:{{ $reviewRatingFilter === 'all' ? '#fff' : '#4b5563' }};font-size:12px;cursor:pointer;">{{ __('All') }}</button>
+                                        style="padding:.5rem .85rem;border-radius:9999px;border:1px solid {{ $reviewRatingFilter === 'all' ? '#1B4332' : '#d1d5db' }};background:{{ $reviewRatingFilter === 'all' ? '#1B4332' : '#fff' }};color:{{ $reviewRatingFilter === 'all' ? '#fff' : '#4b5563' }};font-size:12px;cursor:pointer;">All</button>
                                 @foreach(range(5, 1) as $rating)
                                     @if(($ratingBreakdown[$rating] ?? 0) > 0)
                                         <button type="button" wire:click="filterReviewsByRating('{{ $rating }}')"
@@ -386,9 +386,9 @@
                             <label style="display:flex;align-items:center;gap:.5rem;color:#6b7280;font-size:12px;">
                                 Sort
                                 <select wire:model.live="reviewSort" style="border:1px solid #d1d5db;border-radius:8px;background:#fff;padding:.5rem 2rem .5rem .7rem;color:#374151;font-size:12px;">
-                                    <option value="newest">{{ __('Newest') }}</option>
-                                    <option value="highest">{{ __('Highest rated') }}</option>
-                                    <option value="lowest">{{ __('Lowest rated') }}</option>
+                                    <option value="newest">Newest</option>
+                                    <option value="highest">Highest rated</option>
+                                    <option value="lowest">Lowest rated</option>
                                 </select>
                             </label>
                         </div>
@@ -460,7 +460,7 @@
                         @empty
                             <div style="padding:2.5rem 1rem;text-align:center;border:1px dashed #d1d5db;border-radius:14px;background:#fff;color:#6b7280;">
                                 No reviews match this rating filter.
-                                <button type="button" wire:click="filterReviewsByRating('all')" style="display:block;margin:.75rem auto 0;border:0;background:transparent;color:#1B4332;text-decoration:underline;cursor:pointer;">{{ __('View all reviews') }}</button>
+                                <button type="button" wire:click="filterReviewsByRating('all')" style="display:block;margin:.75rem auto 0;border:0;background:transparent;color:#1B4332;text-decoration:underline;cursor:pointer;">View all reviews</button>
                             </div>
                         @endforelse
                     </div>
@@ -477,8 +477,8 @@
     <section class="py-16 bg-[#FAF9F6]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">{{ __('You May Also Like') }}</p>
-                <h2 class="font-serif text-3xl md:text-4xl text-[#1B4332]">{{ __('Related Products') }}</h2>
+                <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">You May Also Like</p>
+                <h2 class="font-serif text-3xl md:text-4xl text-[#1B4332]">Related Products</h2>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -501,7 +501,7 @@
                              onerror="this.style.display='none'">
                         
                         @if($related->on_sale || $related->compare_price > $related->price)
-                        <span class="absolute top-4 left-4 bg-[#C65D3B] text-white text-xs tracking-wider px-3 py-1">{{ __('SALE') }}</span>
+                        <span class="absolute top-4 left-4 bg-[#C65D3B] text-white text-xs tracking-wider px-3 py-1">SALE</span>
                         @endif
                     </div>
                     <h3 class="font-serif text-lg mb-1 group-hover:text-[#C65D3B] transition">{{ $related->name }}</h3>

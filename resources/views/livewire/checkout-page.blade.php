@@ -2,14 +2,14 @@
     <!-- Breadcrumb -->
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">
-            <li><a href="/" class="hover:text-[#1a3c34] transition">{{ __('Home') }}</a></li>
+            <li><a href="/" class="hover:text-[#1a3c34] transition">Home</a></li>
             <li>/</li>
-            <li class="text-[#1a3c34]">{{ __('Checkout') }}</li>
+            <li class="text-[#1a3c34]">Checkout</li>
         </ol>
     </nav>
 
     <h1 class="font-serif text-4xl md:text-5xl text-[#1a3c34] mb-8">
-        {{ __('Checkout') }}
+        Checkout
     </h1>
 
     <form wire:submit.prevent="placeOrder" class="space-y-6">
@@ -21,7 +21,7 @@
                     <!-- Shipping Address -->
                     <div class="mb-8">
                         <h2 class="font-serif text-2xl text-[#1a3c34] mb-6">
-                            {{ __('Shipping Address') }}
+                            Shipping Address
                         </h2>
                         <!-- Contact Section mein yeh add karein -->
 <div class="grid grid-cols-2 gap-4">
@@ -62,7 +62,7 @@
 </div>
                         <div class="mt-6">
                             <label class="block text-xs tracking-widest text-gray-600 uppercase mb-2" for="address">
-                                {{ __('Address') }}
+                                Address
                             </label>
                             <input wire:model="street_address" class="w-full border-b border-gray-300 py-3 px-0 bg-transparent focus:outline-none focus:border-[#1a3c34] transition @error('street_address') border-red-500 @enderror" id="address" type="text">
                             <div class="text-red-500 text-xs mt-1">
@@ -73,7 +73,7 @@
                         </div>
                         <div class="mt-6">
                             <label class="block text-xs tracking-widest text-gray-600 uppercase mb-2" for="city">
-                                {{ __('City') }}
+                                City
                             </label>
                             <input wire:model="city" class="w-full border-b border-gray-300 py-3 px-0 bg-transparent focus:outline-none focus:border-[#1a3c34] transition @error('city') border-red-500 @enderror" id="city" type="text">
                             <div class="text-red-500 text-xs mt-1">
@@ -95,9 +95,9 @@
                             <label class="inline-flex items-center justify-between w-full p-5 text-gray-600 bg-[#f5f0e8] border border-gray-200 cursor-pointer peer-checked:border-[#1a3c34] peer-checked:text-[#1a3c34] hover:border-[#1a3c34] transition" for="hosting-small">
                                 <div class="block">
                                     <div class="w-full text-sm font-medium tracking-wider uppercase">
-                                        {{ __('Cash on Delivery') }}
+                                        Cash on Delivery
                                     </div>
-                                    <p class="text-xs text-gray-500 mt-1">{{ __('Pay when your order arrives') }}</p>
+                                    <p class="text-xs text-gray-500 mt-1">Pay when your order arrives</p>
                                 </div>
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -136,7 +136,7 @@
                         ORDER SUMMARY
                     </div>
                     <div class="flex justify-between mb-3 text-sm text-gray-600">
-                        <span>{{ __('Subtotal') }}</span>
+                        <span>Subtotal</span>
                         <span class="font-medium text-gray-900">{{ \App\Support\Price::format($sub_total) }}</span>
                     </div>
                     <div class="flex justify-between mb-3 text-sm text-gray-600">
@@ -161,7 +161,7 @@
                 </div>
                 
                 <button type="submit" class="bg-[#1a3c34] mt-4 w-full py-4 text-sm tracking-widest uppercase text-white hover:bg-opacity-90 transition">
-                    <span wire:loading.remove wire:target="placeOrder">{{ __('Place Order') }}</span>
+                    <span wire:loading.remove wire:target="placeOrder">Place Order</span>
                     <span wire:loading wire:target="placeOrder">Processing...</span>
                 </button>
                 

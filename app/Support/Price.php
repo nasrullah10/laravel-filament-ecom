@@ -4,18 +4,19 @@ namespace App\Support;
 
 class Price
 {
+    public static function currency(): string
+    {
+        return session('display_currency') === 'SAR' && is_numeric(session('pkr_sar_rate'))
+            && (float) session('pkr_sar_rate') > 0 ? 'SAR' : 'PKR';
+    }
+
     public static function format(int|float|string|null $amount): string
     {
-        $number = number_format((float) $amount, 2, '.', ',');
+        $currency = self::currency();
+        $rate = $currency === 'SAR' ? (float) session('pkr_sar_rate') : 1;
 
-        if (app()->getLocale() === 'ar') {
-            return strtr($number, [
-                '0' => '٠', '1' => '١', '2' => '٢', '3' => '٣', '4' => '٤',
-                '5' => '٥', '6' => '٦', '7' => '٧', '8' => '٨', '9' => '٩',
-                ',' => '٬', '.' => '٫',
-            ]).' روبية باكستانية';
-        }
+        $number = number_format((float) $amount * $rate, 2, '.', ',');
 
-        return 'PKR '.$number;
+        return $currency.' '.$number;
     }
 }

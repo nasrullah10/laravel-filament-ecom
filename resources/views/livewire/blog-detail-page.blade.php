@@ -74,7 +74,7 @@
     @if($relatedPosts->isNotEmpty())
         <section class="bg-naas-cream-dark py-16">
             <div class="max-w-6xl mx-auto px-4 md:px-6">
-                <div class="text-center mb-10"><p class="text-xs tracking-[0.2em] text-naas-terracotta uppercase mb-2">{{ __('Keep Reading') }}</p><h2 class="font-serif text-3xl md:text-4xl">{{ __('Related Stories') }}</h2></div>
+                <div class="text-center mb-10"><p class="text-xs tracking-[0.2em] text-naas-terracotta uppercase mb-2">Keep Reading</p><h2 class="font-serif text-3xl md:text-4xl">Related Stories</h2></div>
                 <div class="grid md:grid-cols-3 gap-7">
                     @foreach($relatedPosts as $related)
                         <a href="{{ route('blog.show', $related->slug) }}" wire:navigate class="group bg-naas-cream">

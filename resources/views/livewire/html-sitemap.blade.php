@@ -6,8 +6,8 @@
         <div>
             <h2 class="text-xl font-semibold mb-4 text-primary-600">Pages</h2>
             <ul class="space-y-2">
-                <li><a href="/" class="text-blue-600 hover:underline">{{ __('Home') }}</a></li>
-                <li><a href="{{ route('products') }}" class="text-blue-600 hover:underline">{{ __('Shop') }}</a></li>
+                <li><a href="/" class="text-blue-600 hover:underline">Home</a></li>
+                <li><a href="{{ route('products') }}" class="text-blue-600 hover:underline">Shop</a></li>
                 <li><a href="{{ route('blog.index') }}" class="text-blue-600 hover:underline">Blog</a></li>
                 @foreach($pages as $page)
                     <li>
@@ -21,7 +21,7 @@
 
         {{-- Categories --}}
         <div>
-            <h2 class="text-xl font-semibold mb-4 text-primary-600">{{ __('Categories') }}</h2>
+            <h2 class="text-xl font-semibold mb-4 text-primary-600">Categories</h2>
             <ul class="space-y-2">
                 @foreach($categories as $category)
                     <li>
@@ -35,7 +35,7 @@
 
         {{-- Products --}}
         <div>
-            <h2 class="text-xl font-semibold mb-4 text-primary-600">{{ __('Products') }}</h2>
+            <h2 class="text-xl font-semibold mb-4 text-primary-600">Products</h2>
             <ul class="space-y-2 max-h-96 overflow-y-auto">
                 @foreach($products as $product)
                     <li>

@@ -2,16 +2,16 @@
     <!-- Breadcrumb -->
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">
-            <li><a href="/" class="hover:text-[#1a3c34] transition">{{ __('Home') }}</a></li>
+            <li><a href="/" class="hover:text-[#1a3c34] transition">Home</a></li>
             <li>/</li>
-            <li><a href="{{ route('products') }}" class="hover:text-[#1a3c34] transition">{{ __('Shop') }}</a></li>
+            <li><a href="{{ route('products') }}" class="hover:text-[#1a3c34] transition">Shop</a></li>
             <li>/</li>
-            <li class="text-[#1a3c34]">{{ __('Shopping Cart') }}</li>
+            <li class="text-[#1a3c34]">Shopping Cart</li>
         </ol>
     </nav>
 
     <h1 class="font-serif text-4xl md:text-5xl text-[#1a3c34] mb-8">
-        {{ __('Shopping Cart') }}
+        Shopping Cart
     </h1>
 
     <div class="flex flex-col md:flex-row gap-8">
@@ -22,10 +22,10 @@
                     <thead>
                         <tr class="border-b border-gray-200">
                             <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Product</th>
-                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">{{ __('Price') }}</th>
-                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">{{ __('Quantity') }}</th>
-                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">{{ __('Total') }}</th>
-                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">{{ __('Remove') }}</th>
+                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Price</th>
+                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Quantity</th>
+                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Total</th>
+                            <th class="text-left text-xs tracking-widest uppercase text-gray-500 py-3">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,7 +100,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                                 </svg>
                                 <p class="text-gray-500 text-sm">Your cart is empty</p>
-                                <a href="{{ route('products') }}" class="inline-block mt-4 text-[#1a3c34] text-sm tracking-widest uppercase border-b border-[#1a3c34] pb-1 hover:opacity-70 transition">{{ __('Continue Shopping') }}</a>
+                                <a href="{{ route('products') }}" class="inline-block mt-4 text-[#1a3c34] text-sm tracking-widest uppercase border-b border-[#1a3c34] pb-1 hover:opacity-70 transition">Continue Shopping</a>
                             </td>
                         </tr>
                         @endforelse
@@ -114,7 +114,7 @@
             <div class="bg-[#f5f0e8] p-6 sticky top-6">
                 <h2 class="font-serif text-2xl text-[#1a3c34] mb-6">Summary</h2>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
-                    <span>{{ __('Subtotal') }}</span>
+                    <span>Subtotal</span>
                     <span class="font-medium text-gray-900">{{ \App\Support\Price::format($sub_total) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
@@ -122,7 +122,7 @@
                     <span class="font-medium text-gray-900">{{ \App\Support\Price::format(0) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
-                    <span>{{ __('Shipping') }}</span>
+                    <span>Shipping</span>
                     <span class="font-medium text-[#1a3c34]">
                         @if($shipping_amount == 0)
                             Free
@@ -140,11 +140,11 @@
                 @if($cart_items)
                 <a href="/checkout" 
                    class="block text-center bg-[#1a3c34] text-white py-4 mt-6 text-sm tracking-widest uppercase hover:bg-opacity-90 transition">
-                    {{ __('Proceed to Checkout') }}
+                    Proceed to Checkout
                 </a>
                 <a href="{{ route('products') }}" 
                    class="block text-center text-[#1a3c34] py-3 mt-3 text-xs tracking-widest uppercase hover:opacity-70 transition">
-                    {{ __('Continue Shopping') }}
+                    Continue Shopping
                 </a>
                 @endif
             </div>
@@ -155,8 +155,8 @@
     <section class="py-16 mt-12 bg-[#FAF9F6]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">{{ __('You May Also Like') }}</p>
-                <h2 class="font-serif text-3xl md:text-4xl text-[#1B4332]">{{ __('Related Products') }}</h2>
+                <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">You May Also Like</p>
+                <h2 class="font-serif text-3xl md:text-4xl text-[#1B4332]">Related Products</h2>
             </div>
     
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -179,7 +179,7 @@
                              onerror="this.style.display='none'">
                         
                         @if($related->on_sale || $related->compare_price > $related->price)
-                        <span class="absolute top-4 left-4 bg-[#C65D3B] text-white text-xs tracking-wider px-3 py-1">{{ __('SALE') }}</span>
+                        <span class="absolute top-4 left-4 bg-[#C65D3B] text-white text-xs tracking-wider px-3 py-1">SALE</span>
                         @endif
                     </div>
                     <h3 class="font-serif text-lg mb-1 group-hover:text-[#C65D3B] transition">{{ $related->name }}</h3>

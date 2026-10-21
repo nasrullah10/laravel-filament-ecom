@@ -256,11 +256,11 @@
 
                     <div class="relative z-10 flex items-center h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="max-w-xl">
-                            <p class="text-white/80 text-sm tracking-[0.3em] uppercase mb-3 font-light">{{ __('Best Selling') }}</p>
+                            <p class="text-white/80 text-sm tracking-[0.3em] uppercase mb-3 font-light">Best Selling</p>
                             <h2 class="font-serif text-5xl md:text-6xl text-white mb-4 leading-tight" x-text="product.name"></h2>
                             <p class="text-white/90 text-lg mb-2 font-light" x-text="product.description ? product.description.substring(0, 100) + '...' : ''"></p>
                             <p class="text-white text-2xl font-serif mb-8" x-text="product.price"></p>
-                            <a :href="'/products/' + product.slug" class="inline-block bg-white text-gray-900 px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-gray-900 hover:text-white transition-all duration-300">{{ __('SHOP NOW') }}</a>
+                            <a :href="'/products/' + product.slug" class="inline-block bg-white text-gray-900 px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-gray-900 hover:text-white transition-all duration-300">SHOP NOW</a>
                         </div>
                     </div>
                 </div>
@@ -298,8 +298,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                     </svg>
                     <div class="text-left">
-                        <p class="text-sm font-medium text-gray-900">{{ __('Free Shipping in Pakistan') }}</p>
-                        <p class="text-xs text-gray-500">{{ __('On orders over Rs. 10,000') }}</p>
+                        <p class="text-sm font-medium text-gray-900">Free Shipping in Pakistan</p>
+                        <p class="text-xs text-gray-500">On orders over {{ \App\Support\Price::format(10000) }}</p>
                     </div>
                 </div>
                 <div class="flex items-center justify-center space-x-3">
@@ -307,8 +307,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                     <div class="text-left">
-                        <p class="text-sm font-medium text-gray-900">{{ __('Cash on Delivery') }}</p>
-                        <p class="text-xs text-gray-500">{{ __('Pay when your order arrives') }}</p>
+                        <p class="text-sm font-medium text-gray-900">Cash on Delivery</p>
+                        <p class="text-xs text-gray-500">Pay when your order arrives</p>
                     </div>
                 </div>
                 <div class="flex items-center justify-center space-x-3">
@@ -316,8 +316,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                     <div class="text-left">
-                        <p class="text-sm font-medium text-gray-900">{{ __('Crafted in Pakistan') }}</p>
-                        <p class="text-xs text-gray-500">{{ __('By artisans, since 2019') }}</p>
+                        <p class="text-sm font-medium text-gray-900">Crafted in Pakistan</p>
+                        <p class="text-xs text-gray-500">By artisans, since 2019</p>
                     </div>
                 </div>
             </div>
@@ -330,8 +330,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-12">
                 <div>
-                    <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">{{ __('Just Landed') }}</p>
-                    <h2 class="font-serif text-4xl text-[#1B4332]">{{ __('New arrivals.') }}</h2>
+                    <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">Just Landed</p>
+                    <h2 class="font-serif text-4xl text-[#1B4332]">New arrivals.</h2>
                 </div>
                 <a href="{{ route('products') }}" class="text-sm tracking-wider hover:text-[#C65D3B] transition flex items-center group">
                     VIEW ALL 
@@ -353,7 +353,7 @@
                         <img src="{{ asset('storage/' . $firstImage) }}" 
                              alt="{{ $product->name }}" 
                              class="w-full h-[350px] object-cover group-hover:scale-105 transition duration-700">
-                        <span class="absolute top-4 left-4 bg-white text-xs tracking-wider px-3 py-1">{{ __('NEW') }}</span>
+                        <span class="absolute top-4 left-4 bg-white text-xs tracking-wider px-3 py-1">NEW</span>
 
                         <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition duration-300">
                             <button class="w-full bg-white text-gray-900 py-3 text-xs tracking-wider uppercase hover:bg-gray-900 hover:text-white transition">
@@ -379,8 +379,8 @@
 <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-end mb-12">
         <div>
-            <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">{{ __('Best Selling') }}</p>
-            <h2 class="font-serif text-4xl text-[#1B4332]">{{ __('Best Selling.') }}</h2>
+            <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">Best Selling</p>
+            <h2 class="font-serif text-4xl text-[#1B4332]">Best Selling.</h2>
         </div>
         <a href="{{ route('products') }}" class="text-sm tracking-wider hover:text-[#C65D3B] transition flex items-center group">
             VIEW ALL 
@@ -402,7 +402,7 @@
                 <img src="{{ asset('storage/' . $firstImage) }}" 
                      alt="{{ $product->name }}" 
                      class="w-full h-[350px] object-cover group-hover:scale-105 transition duration-700">
-                <span class="absolute top-4 left-4 bg-white text-xs tracking-wider px-3 py-1">{{ __('BEST') }}</span>
+                <span class="absolute top-4 left-4 bg-white text-xs tracking-wider px-3 py-1">BEST</span>
 
                 <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition duration-300">
                     <button class="w-full bg-white text-gray-900 py-3 text-xs tracking-wider uppercase hover:bg-gray-900 hover:text-white transition">
@@ -430,8 +430,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {{-- Section Header --}}
             <div class="text-center mb-16">
-                <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">{{ __('What They Say') }}</p>
-                <h2 class="font-serif text-4xl md:text-5xl text-[#1B4332] mb-4">{{ __('Client Stories.') }}</h2>
+                <p class="text-xs tracking-[0.2em] text-[#C65D3B] mb-2 uppercase">What They Say</p>
+                <h2 class="font-serif text-4xl md:text-5xl text-[#1B4332] mb-4">Client Stories.</h2>
                 <p class="text-gray-500 text-sm max-w-md mx-auto">Real feedback from our valued customers across Pakistan.</p>
             </div>
 

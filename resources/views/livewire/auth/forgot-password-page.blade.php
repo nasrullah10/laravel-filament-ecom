@@ -40,7 +40,7 @@
                     {{-- Email --}}
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">
-                            {{ __('Email Address') }}
+                            Email Address
                         </label>
                         <div class="relative">
                             <input
@@ -67,7 +67,7 @@
                     <button
                         type="submit"
                         class="w-full bg-naas-green hover:bg-naas-terracotta text-white py-2.5 rounded-lg font-semibold tracking-wide text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-                        {{ __('Reset Password') }}
+                        Reset Password
                     </button>
 
                 </form>

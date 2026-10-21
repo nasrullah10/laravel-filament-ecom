@@ -6,15 +6,15 @@
                 {{-- Heading --}}
                 <div class="text-center mb-4">
                     <h1 class="text-2xl md:text-3xl font-serif text-naas-green">
-                        {{ __('Sign In') }}
+                        Sign In
                     </h1>
                     <p class="mt-1 text-gray-500 text-sm">
-                        {{ __('Welcome back to NAAS Shopping Premium Fashion') }}
+                        Welcome back to NAAS Shopping Premium Fashion
                     </p>
                     <p class="mt-1 text-xs text-gray-600">
-                        {{ __('Don\'t have an account?') }}
+                        Don't have an account?
                         <a wire:navigate href="/register" class="text-naas-terracotta hover:text-naas-green transition font-medium">
-                            {{ __('Sign up here') }}
+                            Sign up here
                         </a>
                     </p>
                 </div>
@@ -23,7 +23,7 @@
                 <div class="flex items-center mb-4">
                     <div class="flex-1 border-t border-gray-200"></div>
                     <span class="px-3 text-[10px] uppercase tracking-widest text-gray-400">
-                        {{ __('Login') }}
+                        Login
                     </span>
                     <div class="flex-1 border-t border-gray-200"></div>
                 </div>
@@ -32,7 +32,7 @@
                 @if ($authError || $errors->any())
                 <div class="mb-4 rounded-lg p-3" role="alert" aria-live="polite"
                      style="display: block; background-color: #fee2e2; border: 1px solid #ef4444; color: #991b1b; font-size: 14px;">
-                    <strong style="display: block; margin-bottom: 4px;">{{ __('Unable to sign in') }}</strong>
+                    <strong style="display: block; margin-bottom: 4px;">Unable to sign in</strong>
                     {{ $authError ?: $errors->first() }}
                 </div>
                 @endif
@@ -42,13 +42,13 @@
                     {{-- Email --}}
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">
-                            {{ __('Email Address') }}
+                            Email Address
                         </label>
                         <div class="relative">
                             <input
                                 type="email"
                                 wire:model="email"
-                                placeholder="{{ __('Enter Your Email Address Here') }}"
+                                placeholder="Enter Your Email Address Here"
                                 class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm @error('email') border-red-500 @enderror
                                 focus:ring-2 focus:ring-naas-terracotta/30 focus:border-naas-terracotta
                                 outline-none transition"
@@ -70,10 +70,10 @@
                     <div>
                         <div class="flex justify-between items-center mb-1">
                             <label class="block text-xs font-medium text-gray-700">
-                                {{ __('Password') }}
+                                Password
                             </label>
                             <a wire:navigate href="{{ route('password.request') }}" class="text-[10px] text-naas-terracotta hover:text-naas-green transition font-medium">
-                                {{ __('Forgot password?') }}
+                                Forgot password?
                             </a>
                         </div>
                         <div class="relative">
@@ -104,7 +104,7 @@
                         wire:loading.attr="disabled"
                         wire:target="save"
                         class="w-full bg-naas-green hover:bg-naas-terracotta text-white py-2.5 rounded-lg font-semibold tracking-wide text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-                        <span wire:loading.remove wire:target="save">{{ __('Sign In') }}</span>
+                        <span wire:loading.remove wire:target="save">Sign In</span>
                         <span wire:loading wire:target="save">Signing In...</span>
                     </button>
 
@@ -113,7 +113,7 @@
                 {{-- OR --}}
                 <div class="flex items-center my-4">
                     <div class="flex-1 border-t border-gray-200"></div>
-                    <span class="px-3 text-xs text-gray-400">{{ __('OR') }}</span>
+                    <span class="px-3 text-xs text-gray-400">OR</span>
                     <div class="flex-1 border-t border-gray-200"></div>
                 </div>
 
@@ -122,7 +122,7 @@
                     href="{{ route('google.login') }}"
                     class="w-full flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-2.5 px-4 text-sm font-medium text-gray-700 transition-all duration-300 hover:border-naas-green hover:bg-gray-50 hover:shadow-md hover:-translate-y-0.5">
                     <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
-                    <span>{{ __('Continue with Google') }}</span>
+                    <span>Continue with Google</span>
                 </a>
 
             </div>
