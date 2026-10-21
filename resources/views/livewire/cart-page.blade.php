@@ -62,7 +62,7 @@
                                     <span class="text-sm font-medium text-gray-900">{{ $item['name'] }}</span>
                                 </div>
                             </td>
-                            <td class="py-4 text-sm text-gray-600">{{ Number::currency($item['unit_amount'],'PKR',true) }}</td>
+                            <td class="py-4 text-sm text-gray-600">{{ \App\Support\Price::format($item['unit_amount']) }}</td>
                             <td class="py-4">
                                 <div class="flex items-center">
                                     <button wire:click="decreaseQty({{ $item['product_id'] }})" 
@@ -80,7 +80,7 @@
                                     </button>
                                 </div>
                             </td>
-                            <td class="py-4 text-sm font-medium text-[#1a3c34]">{{ Number::currency($item['total_amount'],'PKR',true) }}</td>
+                            <td class="py-4 text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($item['total_amount']) }}</td>
                             <td class="py-4">
                                 <button wire:click="removeItem({{ $item['product_id'] }})" 
                                         class="text-gray-400 hover:text-red-500 transition p-2">
@@ -115,11 +115,11 @@
                 <h2 class="font-serif text-2xl text-[#1a3c34] mb-6">Summary</h2>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>{{ __('Subtotal') }}</span>
-                    <span class="font-medium text-gray-900">{{ Number::currency($sub_total,'PKR',true) }}</span>
+                    <span class="font-medium text-gray-900">{{ \App\Support\Price::format($sub_total) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>Taxes</span>
-                    <span class="font-medium text-gray-900">{{ Number::currency(0,'PKR',true) }}</span>
+                    <span class="font-medium text-gray-900">{{ \App\Support\Price::format(0) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>{{ __('Shipping') }}</span>
@@ -127,14 +127,14 @@
                         @if($shipping_amount == 0)
                             Free
                         @else
-                            {{ Number::currency($shipping_amount,'PKR',true) }}
+                            {{ \App\Support\Price::format($shipping_amount) }}
                         @endif
                     </span>
                 </div>
                 <div class="border-t border-gray-300 my-4"></div>
                 <div class="flex justify-between">
                     <span class="font-serif text-lg text-[#1a3c34]">Grand Total</span>
-                    <span class="font-serif text-xl text-[#1a3c34]">{{ Number::currency($grand_total,'PKR',true) }}</span>
+                    <span class="font-serif text-xl text-[#1a3c34]">{{ \App\Support\Price::format($grand_total) }}</span>
                 </div>
 
                 @if($cart_items)
@@ -185,9 +185,9 @@
                     <h3 class="font-serif text-lg mb-1 group-hover:text-[#C65D3B] transition">{{ $related->name }}</h3>
                     <p class="text-gray-500 text-sm">
                         @if($related->compare_price && $related->compare_price > $related->price)
-                            <span class="text-gray-400 line-through mr-2">{{ Number::currency($related->compare_price,'PKR',true) }}</span>
+                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::format($related->compare_price) }}</span>
                         @endif
-                        {{ Number::currency($related->price,'PKR',true) }}
+                        {{ \App\Support\Price::format($related->price) }}
                     </p>
                 </a>
                 @endforeach

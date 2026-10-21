@@ -224,7 +224,7 @@
                     'id' => $product->id,
                     'name' => $product->name,
                     'slug' => $product->slug,
-                    'price' => $product->price,
+                    'price' => \App\Support\Price::format($product->price),
                     'description' => $product->description,
                     'image_url' => asset('storage/' . ($images[0] ?? $product->image)),
                 ];
@@ -259,7 +259,7 @@
                             <p class="text-white/80 text-sm tracking-[0.3em] uppercase mb-3 font-light">{{ __('Best Selling') }}</p>
                             <h2 class="font-serif text-5xl md:text-6xl text-white mb-4 leading-tight" x-text="product.name"></h2>
                             <p class="text-white/90 text-lg mb-2 font-light" x-text="product.description ? product.description.substring(0, 100) + '...' : ''"></p>
-                            <p class="text-white text-2xl font-serif mb-8" x-text="'Rs. ' + product.price"></p>
+                            <p class="text-white text-2xl font-serif mb-8" x-text="product.price"></p>
                             <a :href="'/products/' + product.slug" class="inline-block bg-white text-gray-900 px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-gray-900 hover:text-white transition-all duration-300">{{ __('SHOP NOW') }}</a>
                         </div>
                     </div>
@@ -364,9 +364,9 @@
                     <h3 class="font-serif text-lg mb-1 group-hover:text-[#C65D3B] transition">{{ $product->name }}</h3>
                    <p class="text-gray-500 text-sm">
                         @if($product->compare_price && $product->compare_price > $product->price)
-                            <span class="text-gray-400 line-through mr-2">Rs. {{ number_format($product->compare_price) }}</span>
+                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::format($product->compare_price) }}</span>
                         @endif
-                        Rs. {{ number_format($product->price) }}
+                        {{ \App\Support\Price::format($product->price) }}
                     </p>
                 </a>
                 @endforeach
@@ -413,9 +413,9 @@
             <h3 class="font-serif text-lg mb-1 group-hover:text-[#C65D3B] transition">{{ $product->name }}</h3>
             <p class="text-gray-500 text-sm">
                 @if($product->compare_price && $product->compare_price > $product->price)
-                    <span class="text-gray-400 line-through mr-2">Rs. {{ number_format($product->compare_price) }}</span>
+                    <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::format($product->compare_price) }}</span>
                 @endif
-                Rs. {{ number_format($product->price) }}
+                {{ \App\Support\Price::format($product->price) }}
             </p>
         </a>
         @endforeach

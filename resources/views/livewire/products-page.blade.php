@@ -126,7 +126,7 @@
                         <div class="w-12 pb-2 mb-6 border-b border-[#1a3c34]"></div>
                         <div>
                             <div class="font-medium text-sm text-[#1a3c34] mb-3">
-                                {{ Number::currency($price_range,'PKR',true) }}
+                                {{ \App\Support\Price::format($price_range) }}
                             </div>
                             <input type="range" 
                                    wire:model.live="price_range" 
@@ -136,11 +136,11 @@
                                    step="500">
                             <div class="flex justify-between">
                                 <span class="text-xs text-gray-500">
-                                    {{ Number::currency(500,'PKR',true) }}
+                                    {{ \App\Support\Price::format(500) }}
                                 </span>
                             
                                 <span class="text-xs text-gray-500">
-                                    {{ Number::currency($price_range,'PKR',true) }}
+                                    {{ \App\Support\Price::format($price_range) }}
                                 </span>
                             </div>
                         </div>
@@ -216,9 +216,9 @@
                                     </div>
                                     <p class="text-sm">
                                         @if($product->compare_price && $product->compare_price > $product->price)
-                                            <span class="text-gray-400 line-through mr-2">{{ Number::currency($product->compare_price,'PKR',true) }}</span>
+                                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::format($product->compare_price) }}</span>
                                         @endif
-                                        <span class="text-[#1a3c34] font-medium">{{ Number::currency($product->price,'PKR',true) }}</span>
+                                        <span class="text-[#1a3c34] font-medium">{{ \App\Support\Price::format($product->price) }}</span>
                                     </p>
                                 </div>
                                 

@@ -164,7 +164,7 @@
                                         </div>
                                         <div class="min-w-0 self-center">
                                             <p class="font-serif text-lg truncate group-hover:text-naas-terracotta transition">{{ $product->name }}</p>
-                                            <p class="text-xs text-naas-gray-warm mt-1">PKR {{ number_format($product->price) }}</p>
+                                            <p class="text-xs text-naas-gray-warm mt-1">{{ \App\Support\Price::format($product->price) }}</p>
                                         </div>
                                     </a>
                                 @endforeach

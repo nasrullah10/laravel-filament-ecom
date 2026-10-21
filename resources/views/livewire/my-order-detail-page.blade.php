@@ -185,11 +185,11 @@
                                     <span class="text-sm font-medium text-gray-900">{{ $item->product->name }}</span>
                                 </div>
                             </td>
-                            <td class="py-4 text-sm text-gray-600">{{ Number::currency($item->unit_amount, 'PKR') }}</td>
+                            <td class="py-4 text-sm text-gray-600">{{ \App\Support\Price::format($item->unit_amount) }}</td>
                             <td class="py-4 text-sm text-gray-600">
                                 <span class="text-center w-8">{{ $item->quantity }}</span>
                             </td>
-                            <td class="py-4 text-sm font-medium text-[#1a3c34]">{{ Number::currency($item->total_amount, 'PKR') }}</td>
+                            <td class="py-4 text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($item->total_amount) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -217,11 +217,11 @@
                 <h2 class="font-serif text-2xl text-[#1a3c34] mb-6">Summary</h2>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>{{ __('Subtotal') }}</span>
-                    <span class="font-medium text-gray-900">{{ Number::currency($order->grand_total, 'PKR') }}</span>
+                    <span class="font-medium text-gray-900">{{ \App\Support\Price::format($order->grand_total) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>Taxes</span>
-                    <span class="font-medium text-gray-900">{{ Number::currency(0, 'PKR') }}</span>
+                    <span class="font-medium text-gray-900">{{ \App\Support\Price::format(0) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>{{ __('Shipping') }}</span>
@@ -230,7 +230,7 @@
                 <div class="border-t border-gray-300 my-4"></div>
                 <div class="flex justify-between">
                     <span class="font-serif text-lg text-[#1a3c34]">Grand Total</span>
-                    <span class="font-serif text-xl text-[#1a3c34]">{{ Number::currency($order->grand_total, 'PKR') }}</span>
+                    <span class="font-serif text-xl text-[#1a3c34]">{{ \App\Support\Price::format($order->grand_total) }}</span>
                 </div>
             </div>
         </div>
