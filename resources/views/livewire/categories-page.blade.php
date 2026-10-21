@@ -10,9 +10,9 @@
    <!-- Breadcrumb -->
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">
-            <li><a href="/" class="hover:text-[#1a3c34] transition">Home</a></li>
+            <li><a href="/" class="hover:text-[#1a3c34] transition">{{ __('Home') }}</a></li>
             <li>/</li>
-            <li class="text-[#1a3c34]">Categories</li>
+            <li class="text-[#1a3c34]">{{ __('Categories') }}</li>
         </ol>
     </nav>
   <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">

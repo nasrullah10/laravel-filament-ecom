@@ -2,9 +2,9 @@
     <!-- Breadcrumb -->
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-xs tracking-widest text-gray-500 uppercase">
-            <li><a href="/" class="hover:text-[#1a3c34] transition">Home</a></li>
+            <li><a href="/" class="hover:text-[#1a3c34] transition">{{ __('Home') }}</a></li>
             <li>/</li>
-            <li><a href="{{ route('products') }}" class="hover:text-[#1a3c34] transition">Shop</a></li>
+            <li><a href="{{ route('products') }}" class="hover:text-[#1a3c34] transition">{{ __('Shop') }}</a></li>
             <li>/</li>
             <li class="text-[#1a3c34]">Order Confirmation</li>
         </ol>
@@ -78,7 +78,7 @@
                             <h2 class="font-serif text-2xl text-[#1a3c34] mb-2">Order details</h2>
                             <div class="flex flex-col items-center justify-center w-full pb-4 space-y-4 border-b border-gray-200">
                                 <div class="flex justify-between w-full">
-                                    <p class="text-base leading-4 text-gray-600">Subtotal</p>
+                                    <p class="text-base leading-4 text-gray-600">{{ __('Subtotal') }}</p>
                                     <p class="text-base leading-4 text-gray-900 font-medium">{{ Number::currency($order->grand_total - $order->shipping_amount, 'PKR') }}</p>
                                 </div>
                                 <div class="flex items-center justify-between w-full">
@@ -86,7 +86,7 @@
                                     <p class="text-base leading-4 text-gray-900 font-medium">{{ Number::currency(0, 'PKR') }}</p>
                                 </div>
                                 <div class="flex items-center justify-between w-full">
-                                    <p class="text-base leading-4 text-gray-600">Shipping</p>
+                                    <p class="text-base leading-4 text-gray-600">{{ __('Shipping') }}</p>
                                     <p class="text-base leading-4 text-gray-900 font-medium">
                                         @if($order->shipping_amount == 0)
                                             Free
@@ -97,14 +97,14 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-between w-full">
-                                <p class="font-serif text-lg text-[#1a3c34]">Total</p>
+                                <p class="font-serif text-lg text-[#1a3c34]">{{ __('Total') }}</p>
                                 <p class="font-serif text-xl text-[#1a3c34]">{{ Number::currency($order->grand_total, 'PKR') }}</p>
                             </div>
                         </div>
 
                         <!-- Shipping -->
                         <div class="flex flex-col w-full px-2 space-y-4 md:px-8">
-                            <h2 class="font-serif text-2xl text-[#1a3c34] mb-2">Shipping</h2>
+                            <h2 class="font-serif text-2xl text-[#1a3c34] mb-2">{{ __('Shipping') }}</h2>
                             <div class="flex items-start justify-between w-full">
                                 <div class="flex items-center justify-center space-x-3">
                                     <div class="w-8 h-8 text-[#1a3c34]">

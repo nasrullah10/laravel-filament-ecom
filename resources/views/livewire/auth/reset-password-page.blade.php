@@ -6,7 +6,7 @@
                 {{-- Heading --}}
                 <div class="text-center mb-4">
                     <h1 class="text-2xl md:text-3xl font-serif text-naas-green">
-                        Reset Password
+                        {{ __('Reset Password') }}
                     </h1>
                     <p class="mt-1 text-gray-500 text-sm">
                         Create a new password for your account
@@ -17,7 +17,7 @@
                 <div class="flex items-center mb-4">
                     <div class="flex-1 border-t border-gray-200"></div>
                     <span class="px-3 text-[10px] uppercase tracking-widest text-gray-400">
-                        New Password
+                        {{ __('New Password') }}
                     </span>
                     <div class="flex-1 border-t border-gray-200"></div>
                 </div>
@@ -34,7 +34,7 @@
                     {{-- Password --}}
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">
-                            New Password
+                            {{ __('New Password') }}
                         </label>
                         <div class="relative">
                             <input
@@ -60,7 +60,7 @@
                     {{-- Confirm Password --}}
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">
-                            Confirm Password
+                            {{ __('Confirm Password') }}
                         </label>
                         <div class="relative">
                             <input

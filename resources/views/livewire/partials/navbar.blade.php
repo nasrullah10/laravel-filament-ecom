@@ -1,8 +1,9 @@
 <!-- resources/views/livewire/partials/navbar.blade.php -->
 <header class="sticky top-0 z-50 w-full bg-naas-cream border-b border-naas-cream-dark">
+    <x-language-switcher />
     <!-- Top Bar -->
     <div class="bg-naas-green text-white text-xs py-2 text-center tracking-wider font-light">
-        FREE SHIPPING IN PAKISTAN ON ORDERS OVER RS. 10,000
+        {{ __('FREE SHIPPING IN PAKISTAN ON ORDERS OVER RS. 10,000') }}
     </div>
 
     <nav class="max-w-[85rem] w-full mx-auto px-4 md:px-6 lg:px-8" aria-label="Global">

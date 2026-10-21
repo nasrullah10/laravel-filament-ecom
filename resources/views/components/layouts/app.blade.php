@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-88BS9Z6DB1"></script>
@@ -96,13 +96,22 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
     
     <!-- Livewire Styles -->
     @livewireStyles
+    <style>
+        [dir="rtl"] body { font-family: Tahoma, Arial, sans-serif; }
+        [dir="rtl"] .font-serif { font-family: Tahoma, Arial, sans-serif; }
+        [dir="rtl"] .text-left { text-align: right; }
+        [dir="rtl"] .text-right { text-align: left; }
+        [dir="rtl"] [class*="tracking-"] { letter-spacing: normal; }
+        [dir="rtl"] input[type="email"], [dir="rtl"] input[type="tel"] { direction: ltr; text-align: right; }
+        [dir="rtl"] [class*="space-x-"] > :not([hidden]) ~ :not([hidden]) { --tw-space-x-reverse: 1; }
+    </style>
 </head>
 <!-- Floating WhatsApp Button with Animation -->
 <a href="https://wa.me/923162131295" 
    target="_blank" 
    rel="noopener noreferrer"
    class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group animate-bounce-slow"
-   aria-label="Chat on WhatsApp">
+   aria-label="{{ __('Chat on WhatsApp') }}">
    
     <!-- White Pulse Ring Effect -->
     <span class="absolute inset-0 rounded-full bg-white animate-ping opacity-60"></span>
@@ -113,7 +122,7 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
     
     <!-- Tooltip -->
     <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
-        Chat with us
+        {{ __('Chat with us') }}
         <span class="absolute right-[-4px] top-1/2 -translate-y-1/2 border-4 border-transparent border-l-gray-900"></span>
     </span>
 </a>
@@ -147,7 +156,7 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
         <div role="status" aria-live="polite"
              style="position: relative; z-index: 50; margin: 12px auto; max-width: 64rem; padding: 12px 44px 12px 16px; border: 1px solid #16a34a; border-radius: 8px; background: #dcfce7; color: #166534; font-size: 14px;">
             {{ session('success') }}
-            <button type="button" aria-label="Close message" onclick="this.parentElement.remove()"
+            <button type="button" aria-label="{{ __('Close message') }}" onclick="this.parentElement.remove()"
                     style="position: absolute; right: 12px; top: 8px; border: 0; background: transparent; color: #166534; font-size: 20px; cursor: pointer;">&times;</button>
         </div>
     @endif
@@ -156,7 +165,7 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
         <div role="alert" aria-live="polite"
              style="position: relative; z-index: 50; margin: 12px auto; max-width: 64rem; padding: 12px 44px 12px 16px; border: 1px solid #dc2626; border-radius: 8px; background: #fee2e2; color: #991b1b; font-size: 14px;">
             {{ session('error') }}
-            <button type="button" aria-label="Close message" onclick="this.parentElement.remove()"
+            <button type="button" aria-label="{{ __('Close message') }}" onclick="this.parentElement.remove()"
                     style="position: absolute; right: 12px; top: 8px; border: 0; background: transparent; color: #991b1b; font-size: 20px; cursor: pointer;">&times;</button>
         </div>
     @endif
@@ -177,7 +186,7 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
 
                 <!-- Column 1: Information (Privacy, Terms, About Us, Contact Us) -->
                 <div>
-                    <h4 class="text-xs tracking-widest mb-6 text-gray-400">INFORMATION</h4>
+                    <h4 class="text-xs tracking-widest mb-6 text-gray-400">{{ __('INFORMATION') }}</h4>
                     <ul class="space-y-3 text-sm">
                         @php
                             $infoPages = \App\Models\Page::active()
@@ -212,7 +221,7 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
 
                 <!-- Column 2: Shop -->
                 <div>
-                    <h4 class="text-xs tracking-widest mb-6 text-gray-400">SHOP</h4>
+                    <h4 class="text-xs tracking-widest mb-6 text-gray-400">{{ __('SHOP') }}</h4>
                     <ul class="space-y-3 text-sm">
                         @foreach($menuCategories ?? [] as $category)
                         <li><a href="/products?category={{ $category->slug }}" class="hover:text-naas-terracotta transition">{{ $category->name }}</a></li>
@@ -222,11 +231,11 @@ src="https://www.facebook.com/tr?id=2259771218109187&ev=PageView&noscript=1"
 
                 <!-- Column 3: Maison -->
                 <div>
-                    <h4 class="text-xs tracking-widest mb-6 text-gray-400">MAISON</h4>
+                    <h4 class="text-xs tracking-widest mb-6 text-gray-400">{{ __('MAISON') }}</h4>
                     <ul class="space-y-3 text-sm">
-                        <li><a href="{{ route('about-us') }}" class="hover:text-naas-terracotta transition">Our Story</a></li>
-                        <li><a href="{{ route('contact-us') }}" class="hover:text-naas-terracotta transition">Contact Us</a></li>
-                        <li><a href="{{ route('blog.index') }}" class="hover:text-naas-terracotta transition">Journal</a></li>
+                        <li><a href="{{ route('about-us') }}" class="hover:text-naas-terracotta transition">{{ __('Our Story') }}</a></li>
+                        <li><a href="{{ route('contact-us') }}" class="hover:text-naas-terracotta transition">{{ __('Contact Us') }}</a></li>
+                        <li><a href="{{ route('blog.index') }}" class="hover:text-naas-terracotta transition">{{ __('Journal') }}</a></li>
                     </ul>
                     <div class="flex space-x-4 mt-6">
                         <a href="https://www.facebook.com/NaasShopping" target="_blank" rel="noopener noreferrer" class="hover:text-naas-terracotta transition">

@@ -26,6 +26,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->renderHook('panels::topbar.end', fn () => view('components.language-switcher'))
+            ->renderHook('panels::auth.login.form.before', fn () => view('components.language-switcher'))
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -51,6 +53,7 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->middleware([\App\Http\Middleware\SetLocale::class], isPersistent: true)
             ->authMiddleware([
                 Authenticate::class,
             ]);

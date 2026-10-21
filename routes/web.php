@@ -20,6 +20,7 @@ use App\Livewire\Auth\ForgotPasswordPage;
 use App\Livewire\BlogPage;
 use App\Livewire\BlogDetailPage;
 use App\Livewire\Pages\ShowPage;
+Route::post('/language/{locale}', \App\Http\Controllers\LocaleController::class)->name('locale.update');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
