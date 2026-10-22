@@ -66,7 +66,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $order->created_at->format('d-m-Y') }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{!! $status !!}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{!! $payment_status !!}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($order->grand_total) }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($order->grand_total, $order->grand_total_sar) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                                     <a href="/my-order-detail/{{ $order->id }}" class="inline-block bg-[#1a3c34] text-white py-2.5 px-6 text-xs tracking-widest uppercase hover:bg-opacity-90 transition">View Details</a>
                                 </td>

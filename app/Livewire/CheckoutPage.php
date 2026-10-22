@@ -107,7 +107,7 @@ class CheckoutPage extends Component
         }
 
         $this->validate($rules);
-        $cart_items = $this->checkoutCartItems;
+        $cart_items = CartManagement::withSarPrices($this->checkoutCartItems);
          $subTotal = CartManagement::calculateGrandTotal($cart_items);
 
         // Shipping Rule
@@ -144,6 +144,8 @@ class CheckoutPage extends Component
                 'quantity'   => $item['quantity'],
                 'unit_amount'      => $item['unit_amount'],
                 'total_amount'      => $item['total_amount'],
+                'unit_amount_sar' => \App\Support\Price::currency() === 'SAR' ? \App\Support\Price::sar($item['unit_amount'], $item['unit_amount_sar'] ?? null) : null,
+                'total_amount_sar' => \App\Support\Price::currency() === 'SAR' ? \App\Support\Price::sar($item['unit_amount'], $item['unit_amount_sar'] ?? null) * $item['quantity'] : null,
             ];
         }
 
@@ -154,6 +156,10 @@ class CheckoutPage extends Component
         $order->first_name = $this->first_name;
         $order->last_name = $this->last_name;
         $order->grand_total = $grandTotal;
+        if (\App\Support\Price::currency() === 'SAR') {
+            $order->shipping_amount_sar = \App\Support\Price::sar($shippingAmount);
+            $order->grand_total_sar = \App\Support\Price::cartTotal($cart_items) + $order->shipping_amount_sar;
+        }
         $order->payment_method = $this->payment_method;
         $order->payment_status = 'pending';
         $order->status = 'new';
@@ -237,7 +243,7 @@ class CheckoutPage extends Component
 
     public function render()
     {
-        $cart_items = $this->checkoutCartItems;
+        $cart_items = CartManagement::withSarPrices($this->checkoutCartItems);
         $sub_total = CartManagement::calculateGrandTotal($cart_items);
 
         $shipping_amount = empty($cart_items)

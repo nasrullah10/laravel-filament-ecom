@@ -195,7 +195,7 @@
                                          onerror="this.onerror=null;this.src='{{ asset('images/naas-logo.jpeg') }}'">
                                     </a>
                                     
-                                    @if($product->on_sale || $product->compare_price > $product->price)
+                                    @if($product->on_sale || \App\Support\Price::hasCompare($product))
                                     <span class="absolute top-3 left-3 bg-[#c75b39] text-white text-xs tracking-wider uppercase px-3 py-1">
                                         Sale
                                     </span>
@@ -215,10 +215,10 @@
                                         </h3>
                                     </div>
                                     <p class="text-sm">
-                                        @if($product->compare_price && $product->compare_price > $product->price)
-                                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::format($product->compare_price) }}</span>
+                                        @if(\App\Support\Price::hasCompare($product))
+                                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::product($product, true) }}</span>
                                         @endif
-                                        <span class="text-[#1a3c34] font-medium">{{ \App\Support\Price::format($product->price) }}</span>
+                                        <span class="text-[#1a3c34] font-medium">{{ \App\Support\Price::product($product) }}</span>
                                     </p>
                                 </div>
                                 

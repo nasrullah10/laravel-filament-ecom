@@ -20,13 +20,19 @@ class Product extends Model
         'meta_description',
         'price',
         'compare_price',
+        'price_sar',
+        'compare_price_sar',
         'is_active',
         'is_featured',
+        'is_new_arrival',
         'in_stock',
         'on_sale',
     ];
     protected $casts = [
         'images' => 'array',
+        'is_new_arrival' => 'boolean',
+        'price_sar' => 'decimal:2',
+        'compare_price_sar' => 'decimal:2',
     ];
     public function category()
     {

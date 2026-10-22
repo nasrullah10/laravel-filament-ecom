@@ -81,7 +81,7 @@ class CartManagement
         $cart_items = array_values($cart_items);
         
         self::addCartItemsToCookie($cart_items);
-        return $cart_items;
+        return self::withSarPrices($cart_items);
     }
 
     // add cart items to cookie
@@ -103,7 +103,7 @@ class CartManagement
         if(!$cart_items){
             $cart_items = [];
         }
-        return $cart_items;
+        return self::withSarPrices($cart_items);
     }
     // increment item quantity
     static public function incrementItemQuantity($product_id)
@@ -117,7 +117,7 @@ class CartManagement
             }
         }
         self::addCartItemsToCookie($cart_items);
-        return $cart_items;
+        return self::withSarPrices($cart_items);
     }
 
     // decrement item quantity
@@ -134,7 +134,17 @@ class CartManagement
             }
         }
         self::addCartItemsToCookie($cart_items);
-        return $cart_items;
+        return self::withSarPrices($cart_items);
+    }
+
+    public static function withSarPrices(array $items): array
+    {
+        $products = Product::whereIn('id', array_column($items, 'product_id'))->get(['id', 'price_sar'])->keyBy('id');
+        foreach ($items as &$item) {
+            $item['unit_amount_sar'] = $products->get($item['product_id'])?->price_sar;
+        }
+        unset($item);
+        return $items;
     }
 
     // calculate grand total

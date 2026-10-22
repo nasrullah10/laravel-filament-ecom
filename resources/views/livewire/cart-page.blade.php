@@ -62,7 +62,7 @@
                                     <span class="text-sm font-medium text-gray-900">{{ $item['name'] }}</span>
                                 </div>
                             </td>
-                            <td class="py-4 text-sm text-gray-600">{{ \App\Support\Price::format($item['unit_amount']) }}</td>
+                            <td class="py-4 text-sm text-gray-600">{{ \App\Support\Price::format($item['unit_amount'], $item['unit_amount_sar'] ?? null) }}</td>
                             <td class="py-4">
                                 <div class="flex items-center">
                                     <button wire:click="decreaseQty({{ $item['product_id'] }})" 
@@ -80,7 +80,7 @@
                                     </button>
                                 </div>
                             </td>
-                            <td class="py-4 text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($item['total_amount']) }}</td>
+                            <td class="py-4 text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($item['total_amount'], \App\Support\Price::sar($item['unit_amount'], $item['unit_amount_sar'] ?? null) * $item['quantity']) }}</td>
                             <td class="py-4">
                                 <button wire:click="removeItem({{ $item['product_id'] }})" 
                                         class="text-gray-400 hover:text-red-500 transition p-2">
@@ -115,7 +115,7 @@
                 <h2 class="font-serif text-2xl text-[#1a3c34] mb-6">Summary</h2>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>Subtotal</span>
-                    <span class="font-medium text-gray-900">{{ \App\Support\Price::format($sub_total) }}</span>
+                    <span class="font-medium text-gray-900">{{ \App\Support\Price::format($sub_total, \App\Support\Price::cartTotal($cart_items)) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>Taxes</span>
@@ -134,7 +134,7 @@
                 <div class="border-t border-gray-300 my-4"></div>
                 <div class="flex justify-between">
                     <span class="font-serif text-lg text-[#1a3c34]">Grand Total</span>
-                    <span class="font-serif text-xl text-[#1a3c34]">{{ \App\Support\Price::format($grand_total) }}</span>
+                    <span class="font-serif text-xl text-[#1a3c34]">{{ \App\Support\Price::format($grand_total, \App\Support\Price::cartTotal($cart_items) + \App\Support\Price::sar($shipping_amount)) }}</span>
                 </div>
 
                 @if($cart_items)
@@ -178,16 +178,16 @@
                              class="w-full h-[350px] object-cover group-hover:scale-105 transition duration-700"
                              onerror="this.style.display='none'">
                         
-                        @if($related->on_sale || $related->compare_price > $related->price)
+                        @if($related->on_sale || \App\Support\Price::hasCompare($related))
                         <span class="absolute top-4 left-4 bg-[#C65D3B] text-white text-xs tracking-wider px-3 py-1">SALE</span>
                         @endif
                     </div>
                     <h3 class="font-serif text-lg mb-1 group-hover:text-[#C65D3B] transition">{{ $related->name }}</h3>
                     <p class="text-gray-500 text-sm">
-                        @if($related->compare_price && $related->compare_price > $related->price)
-                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::format($related->compare_price) }}</span>
+                        @if(\App\Support\Price::hasCompare($related))
+                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::product($related, true) }}</span>
                         @endif
-                        {{ \App\Support\Price::format($related->price) }}
+                        {{ \App\Support\Price::product($related) }}
                     </p>
                 </a>
                 @endforeach

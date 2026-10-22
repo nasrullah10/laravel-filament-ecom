@@ -43,8 +43,9 @@ class HomePage extends Component
                 ->get();
         }
 
-        // ===== New Arrivals (Latest 8 Active Products) =====
+        // Latest 8 active products marked as new arrivals in admin.
         $featuredProducts = Product::where('is_active', 1)
+            ->where('is_new_arrival', true)
             ->latest()
             ->take(8)
             ->get();

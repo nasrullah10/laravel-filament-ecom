@@ -154,9 +154,9 @@
                             @endif
 
                             <p class="mb-6">
-                                <span class="font-serif text-3xl text-[#1a3c34]">{{ \App\Support\Price::format($product->price) }}</span>
-                                @if($product->compare_price && $product->compare_price > $product->price)
-                                <span class="text-base text-gray-400 line-through ml-3">{{ \App\Support\Price::format($product->compare_price) }}</span>
+                                <span class="font-serif text-3xl text-[#1a3c34]">{{ \App\Support\Price::product($product) }}</span>
+                                @if(\App\Support\Price::hasCompare($product))
+                                <span class="text-base text-gray-400 line-through ml-3">{{ \App\Support\Price::product($product, true) }}</span>
                                 @endif
                             </p>
 
@@ -500,16 +500,16 @@
                              class="w-full h-[350px] object-cover group-hover:scale-105 transition duration-700"
                              onerror="this.style.display='none'">
                         
-                        @if($related->on_sale || $related->compare_price > $related->price)
+                        @if($related->on_sale || \App\Support\Price::hasCompare($related))
                         <span class="absolute top-4 left-4 bg-[#C65D3B] text-white text-xs tracking-wider px-3 py-1">SALE</span>
                         @endif
                     </div>
                     <h3 class="font-serif text-lg mb-1 group-hover:text-[#C65D3B] transition">{{ $related->name }}</h3>
                     <p class="text-gray-500 text-sm">
-                        @if($related->compare_price && $related->compare_price > $related->price)
-                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::format($related->compare_price) }}</span>
+                        @if(\App\Support\Price::hasCompare($related))
+                            <span class="text-gray-400 line-through mr-2">{{ \App\Support\Price::product($related, true) }}</span>
                         @endif
-                        {{ \App\Support\Price::format($related->price) }}
+                        {{ \App\Support\Price::product($related) }}
                     </p>
                 </a>
                 @endforeach

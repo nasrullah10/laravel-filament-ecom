@@ -15,6 +15,8 @@ class OrderItem extends Model
         'quantity',
         'unit_amount',
         'total_amount',
+        'unit_amount_sar',
+        'total_amount_sar',
     ];
     public function order()
     {

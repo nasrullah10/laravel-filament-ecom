@@ -130,7 +130,13 @@ class ProductsPage extends Component
         }  
         
         if($this->price_range){
-            $products->whereBetween('price', [0, $this->price_range]);
+            if (\App\Support\Price::currency() === 'SAR') {
+                $products->whereRaw('COALESCE(price_sar, price * ?) <= ?', [
+                    (float) session('pkr_sar_rate'), \App\Support\Price::sar($this->price_range),
+                ]);
+            } else {
+                $products->whereBetween('price', [0, $this->price_range]);
+            }
         }  
         
         if($this->sort == 'latest'){
@@ -138,7 +144,11 @@ class ProductsPage extends Component
         }
         
         if($this->sort == 'price'){
-            $products->orderBy('price', 'asc');
+            if (\App\Support\Price::currency() === 'SAR') {
+                $products->orderByRaw('COALESCE(price_sar, price * ?) ASC', [(float) session('pkr_sar_rate')]);
+            } else {
+                $products->orderBy('price', 'asc');
+            }
         }
         
         $brands = Brand::where('is_active', 1)->get();

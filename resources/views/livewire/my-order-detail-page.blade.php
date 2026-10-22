@@ -185,11 +185,11 @@
                                     <span class="text-sm font-medium text-gray-900">{{ $item->product->name }}</span>
                                 </div>
                             </td>
-                            <td class="py-4 text-sm text-gray-600">{{ \App\Support\Price::format($item->unit_amount) }}</td>
+                            <td class="py-4 text-sm text-gray-600">{{ \App\Support\Price::format($item->unit_amount, $item->unit_amount_sar) }}</td>
                             <td class="py-4 text-sm text-gray-600">
                                 <span class="text-center w-8">{{ $item->quantity }}</span>
                             </td>
-                            <td class="py-4 text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($item->total_amount) }}</td>
+                            <td class="py-4 text-sm font-medium text-[#1a3c34]">{{ \App\Support\Price::format($item->total_amount, $item->total_amount_sar) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -217,7 +217,7 @@
                 <h2 class="font-serif text-2xl text-[#1a3c34] mb-6">Summary</h2>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>Subtotal</span>
-                    <span class="font-medium text-gray-900">{{ \App\Support\Price::format($order->grand_total) }}</span>
+                    <span class="font-medium text-gray-900">{{ \App\Support\Price::format($order->grand_total - $order->shipping_amount, $order->grand_total_sar !== null ? $order->grand_total_sar - $order->shipping_amount_sar : null) }}</span>
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>Taxes</span>
@@ -225,12 +225,12 @@
                 </div>
                 <div class="flex justify-between mb-3 text-sm text-gray-600">
                     <span>Shipping</span>
-                    <span class="font-medium text-[#1a3c34]">Free</span>
+                    <span class="font-medium text-[#1a3c34]">{{ \App\Support\Price::format($order->shipping_amount, $order->shipping_amount_sar) }}</span>
                 </div>
                 <div class="border-t border-gray-300 my-4"></div>
                 <div class="flex justify-between">
                     <span class="font-serif text-lg text-[#1a3c34]">Grand Total</span>
-                    <span class="font-serif text-xl text-[#1a3c34]">{{ \App\Support\Price::format($order->grand_total) }}</span>
+                    <span class="font-serif text-xl text-[#1a3c34]">{{ \App\Support\Price::format($order->grand_total, $order->grand_total_sar) }}</span>
                 </div>
             </div>
         </div>

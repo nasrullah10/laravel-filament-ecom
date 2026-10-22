@@ -2,6 +2,8 @@
 
 namespace App\Support;
 
+use App\Models\Product;
+
 class Price
 {
     public static function currency(): string
@@ -10,13 +12,40 @@ class Price
             && (float) session('pkr_sar_rate') > 0 ? 'SAR' : 'PKR';
     }
 
-    public static function format(int|float|string|null $amount): string
+    public static function sar(int|float|string|null $amount, int|float|string|null $manual = null): float
+    {
+        return round($manual !== null ? (float) $manual : (float) $amount * (float) session('pkr_sar_rate', 0), 2);
+    }
+
+    public static function format(int|float|string|null $amount, int|float|string|null $sar = null): string
     {
         $currency = self::currency();
-        $rate = $currency === 'SAR' ? (float) session('pkr_sar_rate') : 1;
+        $value = $currency === 'SAR' ? self::sar($amount, $sar) : (float) $amount;
 
-        $number = number_format((float) $amount * $rate, 2, '.', ',');
+        return $currency.' '.number_format($value, 2, '.', ',');
+    }
 
-        return $currency.' '.$number;
+    public static function product(Product $product, bool $compare = false): string
+    {
+        return self::format($compare ? $product->compare_price : $product->price,
+            $compare ? $product->compare_price_sar : $product->price_sar);
+    }
+
+    public static function hasCompare(Product $product): bool
+    {
+        if (self::currency() === 'SAR' && $product->price_sar !== null) {
+            return $product->compare_price_sar !== null && $product->compare_price_sar > $product->price_sar;
+        }
+
+        return $product->compare_price !== null && $product->compare_price > $product->price;
+    }
+
+    public static function cartTotal(iterable $items): float
+    {
+        $total = 0;
+        foreach ($items as $item) {
+            $total += self::sar($item['unit_amount'], $item['unit_amount_sar'] ?? null) * $item['quantity'];
+        }
+        return round($total, 2);
     }
 }

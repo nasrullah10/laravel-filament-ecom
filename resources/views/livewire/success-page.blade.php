@@ -56,7 +56,7 @@
                             Total:
                         </p>
                         <p class="text-base font-medium leading-4 text-[#1a3c34]">
-                            {{ \App\Support\Price::format($order->grand_total) }}
+                            {{ \App\Support\Price::format($order->grand_total, $order->grand_total_sar) }}
                         </p>
                     </div>
                     <div class="w-full px-4 mb-4 md:w-1/4">
@@ -79,7 +79,7 @@
                             <div class="flex flex-col items-center justify-center w-full pb-4 space-y-4 border-b border-gray-200">
                                 <div class="flex justify-between w-full">
                                     <p class="text-base leading-4 text-gray-600">Subtotal</p>
-                                    <p class="text-base leading-4 text-gray-900 font-medium">{{ \App\Support\Price::format($order->grand_total - $order->shipping_amount) }}</p>
+                                    <p class="text-base leading-4 text-gray-900 font-medium">{{ \App\Support\Price::format($order->grand_total - $order->shipping_amount, $order->grand_total_sar !== null ? $order->grand_total_sar - $order->shipping_amount_sar : null) }}</p>
                                 </div>
                                 <div class="flex items-center justify-between w-full">
                                     <p class="text-base leading-4 text-gray-600">Discount</p>
@@ -91,14 +91,14 @@
                                         @if($order->shipping_amount == 0)
                                             Free
                                         @else
-                                            {{ \App\Support\Price::format($order->shipping_amount) }}
+                                            {{ \App\Support\Price::format($order->shipping_amount, $order->shipping_amount_sar) }}
                                         @endif
                                     </p>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between w-full">
                                 <p class="font-serif text-lg text-[#1a3c34]">Total</p>
-                                <p class="font-serif text-xl text-[#1a3c34]">{{ \App\Support\Price::format($order->grand_total) }}</p>
+                                <p class="font-serif text-xl text-[#1a3c34]">{{ \App\Support\Price::format($order->grand_total, $order->grand_total_sar) }}</p>
                             </div>
                         </div>
 
@@ -162,11 +162,11 @@
                                 <p class="text-sm font-medium text-gray-900">{{ $item->product_name }}</p>
                                 <p class="text-xs text-gray-500 mt-1">Qty: {{ $item->quantity }}</p>
                                 @if($item->unit_amount != $item->total_amount)
-                                    <p class="text-xs text-gray-500">{{ \App\Support\Price::format($item->unit_amount) }} each</p>
+                                    <p class="text-xs text-gray-500">{{ \App\Support\Price::format($item->unit_amount, $item->unit_amount_sar) }} each</p>
                                 @endif
                             </div>
                             <div class="text-sm font-medium text-gray-900">
-                                {{ \App\Support\Price::format($item->total_amount) }}
+                                {{ \App\Support\Price::format($item->total_amount, $item->total_amount_sar) }}
                             </div>
                         </div>
                         @endforeach

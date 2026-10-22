@@ -137,7 +137,7 @@
                     </div>
                     <div class="flex justify-between mb-3 text-sm text-gray-600">
                         <span>Subtotal</span>
-                        <span class="font-medium text-gray-900">{{ \App\Support\Price::format($sub_total) }}</span>
+                        <span class="font-medium text-gray-900">{{ \App\Support\Price::format($sub_total, \App\Support\Price::cartTotal($cart_items)) }}</span>
                     </div>
                     <div class="flex justify-between mb-3 text-sm text-gray-600">
                         <span>Taxes</span>
@@ -156,7 +156,7 @@
                     <div class="border-t border-gray-300 my-4"></div>
                     <div class="flex justify-between mb-2">
                         <span class="font-serif text-lg text-[#1a3c34]">Grand Total</span>
-                        <span class="font-serif text-2xl text-[#1a3c34]">{{ \App\Support\Price::format($grand_total) }}</span>
+                        <span class="font-serif text-2xl text-[#1a3c34]">{{ \App\Support\Price::format($grand_total, \App\Support\Price::cartTotal($cart_items) + \App\Support\Price::sar($shipping_amount)) }}</span>
                     </div>
                 </div>
                 
@@ -197,7 +197,7 @@
                                         {{ $item['name'] }}
                                     </p>
                                     <p class="text-xs text-gray-500 mt-1">
-                                        {{ \App\Support\Price::format($item['unit_amount'] ?? $item['price'] ?? 0) }} each
+                                        {{ \App\Support\Price::format($item['unit_amount'] ?? $item['price'] ?? 0, $item['unit_amount_sar'] ?? null) }} each
                                     </p>
 
                                     <div class="flex items-center mt-3">
@@ -222,7 +222,7 @@
                                 </div>
                                 <div class="flex flex-col items-end gap-3">
                                     <span class="text-sm font-medium text-gray-900 whitespace-nowrap">
-                                        {{ \App\Support\Price::format($item['total_amount'] ?? (($item['unit_amount'] ?? $item['price'] ?? 0) * ($item['quantity'] ?? 1))) }}
+                                        {{ \App\Support\Price::format($item['total_amount'] ?? 0, \App\Support\Price::sar($item['unit_amount'] ?? 0, $item['unit_amount_sar'] ?? null) * ($item['quantity'] ?? 1)) }}
                                     </span>
                                     <button type="button"
                                             wire:click="removeCartItem({{ $item['product_id'] }})"

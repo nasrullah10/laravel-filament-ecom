@@ -90,6 +90,16 @@ class ProductResource extends Resource
 
                 Group::make()->schema([
                     Section::make('Price')->schema([
+                        TextInput::make('price_sar')
+                            ->label('SAR Price')
+                            ->numeric()->minValue(0)->maxValue(99999999.99)->step('0.01')
+                            ->prefix('SAR')->nullable()->requiredWith('compare_price_sar')
+                            ->helperText('Your fixed Riyal price. Leave blank to use exchange-rate conversion.'),
+                        TextInput::make('compare_price_sar')
+                            ->label('SAR Compare Price')
+                            ->numeric()->minValue(0)->maxValue(99999999.99)->step('0.01')
+                            ->prefix('SAR')->nullable()->gt('price_sar')
+                            ->helperText('Optional original Riyal price before discount; must exceed SAR Price.'),
                         TextInput::make('price')
                         ->required()
                         ->numeric()
@@ -129,6 +139,11 @@ class ProductResource extends Resource
                     ]),
 
                     Section::make('Status')->schema([
+                        Forms\Components\Checkbox::make('is_new_arrival')
+                            ->label('New Arrival')
+                            ->default(false)
+                            ->helperText('Show this active product in homepage New Arrivals.'),
+
                         Toggle::make('in_stock')
                         ->required()
                         ->default(true),
@@ -166,7 +181,13 @@ class ProductResource extends Resource
                 ->money('PKR')
                 ->sortable(),
 
+                TextColumn::make('price_sar')->label('SAR Price')->money('SAR')->placeholder('Auto conversion')->sortable(),
+
                 IconColumn::make('is_featured')
+                ->boolean(),
+
+                IconColumn::make('is_new_arrival')
+                ->label('New Arrival')
                 ->boolean(),
 
                 IconColumn::make('is_active')

@@ -8,7 +8,7 @@
         </form>
     @endforeach
     @if(\App\Support\Price::currency() === 'SAR')
-        <span style="font-size:11px">Estimated prices. Orders are charged in PKR.
+        <span style="font-size:11px">Orders are charged in PKR. Unset SAR prices and shipping use exchange rates.
             <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">Rates by ExchangeRate-API</a>
         </span>
     @endif
